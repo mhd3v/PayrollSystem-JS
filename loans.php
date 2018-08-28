@@ -1,17 +1,14 @@
 <?php
-
-include('connection.php');
-
+$page_name = 'Loans';
 include('header.php');
-
 ?>
 
-<form class="m-5 p-5">
+<form style="margin:0 20% 0 20%;">
 
-    <h2 style="text-align:center">Add/View Loans for Employee</h2>
+    <h2 style="text-align:center; margin-top:10%;">Add/View Loans for Employee</h2>
 
     <div class="form-group">
-        <label for="">Enter Employee CNIC/Code:</label>
+        <label for="">Search Employee CNIC/Code:</label>
         <input class="form-control" type="text" id="employee_selection">
     </div>  
 
@@ -41,33 +38,46 @@ include('header.php');
 
             <legend class="w-auto">Selected Employee Loans</legend>
 
-            <div class="form-group">
-                <label for="">Total Amount:</label>
-                <input class="form-control" type="text" name="total_amt" id="total_amt" required/>
-
-                <label for="">Total Installments:</label>
-                <input class="form-control" type="text" name="total_installments" id="total_installments" required/>
-
-                <label for="">Installment Amount (Per month):</label>
-
-                <input class="form-control" type="text" id="installment_amt" readonly/>
-
-                <label for="">Loan Start Date:</label>
-                <input class="form-control" type="date" name="start_date" id="start_date" required/>
-
-                <label for="">Loan End Date:</label>
-                <input class="form-control" type="date" name="end_date" id="end_date" required/>
+            <div class="row form-group">
                 
+                <div class="col-md-3">
+                    <label for="">Total Amount:</label>
+                    <input class="form-control" type="text" name="total_amt" id="total_amt" required/>
+                </div>
+
+                <div class="col-md-3">
+                    <label for="">Total Installments:</label>
+                    <input class="form-control" type="text" name="total_installments" id="total_installments" required/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="">Installment Amount (Per month):</label>
+                    <input class="form-control" type="text" id="installment_amt" readonly/>
+                </div>
+                
+            </div>
+
+            <div class="row form-group">
+
+                <div class="col-sm-6">
+                    <label for="">Loan Start Date:</label>
+                    <input class="form-control" type="date" name="start_date" id="start_date" required/>
+                </div>
+
+                <div class="col-sm-6"> 
+                    <label for="">Loan End Date:</label>
+                    <input class="form-control" type="date" name="end_date" id="end_date" required/>
+                </div>
+
             </div>
 
         </fieldset>
 
     </div>
     
-
     <div class="alert alert-primary" id="msg" style="display:none"></div>
 
-    <input type="submit" class="btn btn-success mt-2">
+    <input style="display: none;" type="submit" class="btn btn-success submit-btn mt-2" value="Update Record">
 
 </form>
 
@@ -97,10 +107,9 @@ include('header.php');
 
                     success: function (data) {
 
-                        if (data) {
+                        if (data) { //loan data found
 
                             var loanData = JSON.parse(data);
-
                             console.log(loanData);
                             
                             $('#total_amt').val(loanData.TotalAmount);
@@ -111,10 +120,13 @@ include('header.php');
 
                         }
                         else {  //loan record doesn't exist
+                            $('.submit-btn').val('Add Record');
                             $('.loan-area input').val('');
                         }
 
                         $('.loan-area').fadeIn("slow");
+                        $('.submit-btn').fadeIn("slow");
+                        $('#total_amt').focus();
                     },
                     error: function (data) {
                         $("#msg").html("failed to connect to server");
@@ -124,7 +136,7 @@ include('header.php');
             },
 
         }).data('ui-autocomplete')._renderItem = function (ul, item) {
-             return $("<li>")
+             return $('<li>')
                 .append('Name: ' + item.FullName + ', CNIC: ' + item.CNIC + ', Employee Code: ' + item.Code)
                 .appendTo(ul);
         };
@@ -144,12 +156,13 @@ include('header.php');
                         $("#msg").fadeIn("slow");
                         $('.selected-employee-area').fadeOut("slow");
                         $('.loan-area').fadeOut("slow");
-
+                        $('.submit-btn').fadeOut("slow");
                     }
-                    else {
+                    else {  //error while inserting in db
                         $("#msg").html(data);
                         $("#msg").fadeIn("slow");
                     }
+                    
                 },
                 error: function (data) {
                     $("#msg").html("failed to connect to server");

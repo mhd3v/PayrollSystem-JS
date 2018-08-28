@@ -1,69 +1,24 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Enrollments | Payroll System</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
         
-
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.17/css/jquery.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css">
     <link rel="stylesheet" href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
-
     
 </head>
 
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-2">
-  <a class="navbar-brand" href="#">Payroll System</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="collapse navbar-collapse" id="navbarSupportedContent">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="index.php">Home</a>
-      </li>
-      
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-          HR
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="add_employee.php">Add Employee</a>
-          <a class="dropdown-item" href="view_enrollments.php">View Enrollments</a>
-        </div>
-      </li>
-
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown">
-          Payroll
-        </a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="compensations.php">Compensations</a>
-          <a class="dropdown-item" href="loans.php">Loans</a>
-          <a class="dropdown-item" href="leaves.php">Leaves</a>
-          <a class="dropdown-item" href="generate_payslip.php">Generate Payslip</a>
-          <a class="dropdown-item" href="monthly_salary.php">Monthly Salary</a>
-        </div>
-      </li>
-
-      <li class="nav-item active">
-        <a class="nav-link" href="#">Feedback</a>
-      </li>
-     
-    </ul>
-    
-  </div>
-</nav>
+    <?php include('navbar.php') ?>
     
     <table id="example" class="display" cellspacing="0" width="100%">
         <thead>
@@ -94,12 +49,11 @@
 
     var editor; // use a global for the submit and return data rendering in the examples
     var table;
-    var currentRow;
 
     $(document).ready(function () {
 
         editor = new $.fn.dataTable.Editor({
-        
+
             idSrc:  'Id',
 
             table: "#example",

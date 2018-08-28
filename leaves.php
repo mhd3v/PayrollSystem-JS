@@ -1,14 +1,13 @@
 <?php
 
-include('connection.php');
-
+$page_name = 'Leaves';
 include('header.php');
 
 ?>
 
-<form class="m-5 p-5">
+<form style="margin:0 20% 0 20%;">
 
-    <h2 style="text-align:center">Add/View Leaves for Employee</h2>
+    <h2 style="text-align:center; margin-top:10%;">Add/View Leaves for Employee</h2>
 
     <div class="form-group">
         <label for="">Enter Employee CNIC/Code:</label>
@@ -41,42 +40,69 @@ include('header.php');
 
             <legend class="w-auto">Selected Employee Leaves</legend>
 
-            <div class="form-group">
-                <label for="">Total Annual Leaves:</label>
-                <input class="form-control" type="number" name="total_annual" id="total_annual"/>
+            <div class="row form-group">
 
-                <label for="">Total Sick Leaves:</label>
-                <input class="form-control" type="number" name="total_sick" id="total_sick"/>
+                <div class="col-md-4">
+                    <label for="">Total Annual Leaves:</label>
+                    <input class="form-control" type="number" name="total_annual" id="total_annual"/>
+                </div>
 
-                <label for="">Total Casual Leaves:</label>
-                <input class="form-control" type="number" name="total_casual" id="total_casual"/>
+                <div class="col-md-4">
+                    <label for="">Total Sick Leaves:</label>
+                    <input class="form-control" type="number" name="total_sick" id="total_sick"/>
+                </div>
 
-                <label for="">Annual leaves availed:</label>
-                <input class="form-control" type="number" name="annual_availed" id="annual_availed"/>
+                <div class="col-md-4">
+                    <label for="">Total Casual Leaves:</label>
+                    <input class="form-control" type="number" name="total_casual" id="total_casual"/>
+                </div>
 
-                <label for="">Sick leaves availed:</label>
-                <input class="form-control" type="number" name="sick_availed" id="sick_availed"/>
+            </div>
 
-                <label for="">Casual leaves availed:</label>
-                <input class="form-control" type="number" name="casual_availed" id="casual_availed"/>
-
-                <label for="">Leaves without pay:</label>
-                <input class="form-control" type="number" name="without_pay" id="without_pay"/>
-
-                <label for="">Month/Year for leaves without pay:</label>
-                <input class="form-control" type="date" name="month_year" id="month_year" required/>
-
+            <div class="row form-group">
                 
+                <div class="col-md-4">
+                    <label for="">Annual leaves availed:</label>
+                    <input class="form-control" type="number" name="annual_availed" id="annual_availed"/>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="">Sick leaves availed:</label>
+                    <input class="form-control" type="number" name="sick_availed" id="sick_availed"/>
+                </div>
+
+                <div class="col-md-4">
+                    <label for="">Casual leaves availed:</label>
+                    <input class="form-control" type="number" name="casual_availed" id="casual_availed"/>
+                </div>
+
+            </div>
+
+            <hr>
+
+            <h4>Leaves without pay</h4>
+
+            <div class="row form-group">
+
+                <div class="col-md-6">
+                    <label for="">Total:</label>
+                    <input class="form-control" type="number" name="without_pay" id="without_pay"/>
+                </div>
+
+                <div class="col-md-6">
+                    <label for="">Month/Year:</label>
+                    <input class="form-control" type="date" name="month_year" id="month_year" required/>
+                </div>
+         
             </div>
 
         </fieldset>
 
     </div>
     
-
     <div class="alert alert-primary" id="msg" style="display:none"></div>
 
-    <input type="submit" class="btn btn-success mt-2">
+    <input style="display:none" type="submit" class="btn btn-success submit-btn mt-2">
 
 </form>
 
@@ -106,7 +132,7 @@ include('header.php');
 
                     success: function (data) {
 
-                        if (data) {
+                        if (data) { //loan data found
 
                             var leaveData = JSON.parse(data);
 
@@ -127,6 +153,8 @@ include('header.php');
                         }
 
                         $('.leave-area').fadeIn("slow");
+                        $('.submit-btn').fadeIn("slow");
+                        $('#total_annual').focus();
                     },
                     error: function (data) {
                         $("#msg").html("failed to connect to server");
@@ -156,7 +184,7 @@ include('header.php');
                         $("#msg").fadeIn("slow");
                         $('.selected-employee-area').fadeOut("slow");
                         $('.leave-area').fadeOut("slow");
-
+                        $('.submit-btn').fadeOut("slow");
                     }
                     else {
                         $("#msg").html(data);

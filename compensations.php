@@ -1,18 +1,17 @@
 <?php
 
-include('connection.php');
-
+$page_name = 'Compensations';
 include('header.php');
 
 ?>
 
-<form class="m-5 p-5">
+<form style="margin:0 20% 0 20%;">
 
-    <h2 style="text-align:center">Add/View Compensations for Employee</h2>
+    <h2 style="text-align:center; margin-top:10%;">Add/View Compensations for Employee</h2>
 
     <div class="form-group">
-        <label for="">Enter Employee CNIC/Code:</label>
-        <input class="form-control" type="text" id="employee_selection">
+        <label for="">Search Employee CNIC/Code:</label>
+        <input class="form-control" type="text" id="employee_selection" autofocus>
     </div>  
 
     <div class="selected-employee-area" style="display: none;">
@@ -42,34 +41,51 @@ include('header.php');
 
             <legend class="w-auto">Selected Employee Compensations</legend>
 
-            <div class="form-group">
-                <label for="">Basic Salary:</label>
-                <input class="form-control" type="text" name="basic_sal" id="basic_sal" />
+            <div class="row form-group">
 
-                <label for="">House Rent:</label>
-                <input class="form-control" type="text" name="house_rent" id="house_rent" />
+                <div class="col-md-4">
+                    <label for="">Basic Salary:</label>
+                    <input class="form-control" type="text" name="basic_sal" id="basic_sal" />
+                </div>
 
-                <label for="">Fuel Allowance:</label>
-                <input class="form-control" type="text" name="fuel_allowance" id="fuel_allowance" />
+                <div class="col-md-4">
+                    <label for="">House Rent:</label>
+                    <input class="form-control" type="text" name="house_rent" id="house_rent" />
+                </div>
 
-                <label for="">Utility Allowance:</label>
-                <input class="form-control" type="text" name="utility_allowance" id="utility_allowance" />
+                <div class="col-md-4">
+                    <label for="">Fuel Allowance:</label>
+                    <input class="form-control" type="text" name="fuel_allowance" id="fuel_allowance" />
+                </div>
 
-                <label for="">Mobile Allowance:</label>
-                <input class="form-control" type="text" name="mobile_allowance" id="mobile_allowance" />
+            </div>
 
-                <label for="">Other Allowance:</label>
-                <input class="form-control" type="text" name="other_allowance" id="other_allowance" />
+            <div class="row form-group">
+                
+                <div class="col-md-4">
+                    <label for="">Utility Allowance:</label>
+                    <input class="form-control" type="text" name="utility_allowance" id="utility_allowance" />
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="">Mobile Allowance:</label>
+                    <input class="form-control" type="text" name="mobile_allowance" id="mobile_allowance" />
+                </div>
+
+                <div class="col-md-4">
+                    <label for="">Other Allowance:</label>
+                    <input class="form-control" type="text" name="other_allowance" id="other_allowance" />
+                </div>
                 
             </div>
 
         </fieldset>
+
     </div>
-    
 
     <div class="alert alert-primary" id="msg" style="display:none"></div>
 
-    <input type="submit" class="btn btn-success">
+    <input style="display:none" type="submit" class="btn btn-success submit-btn mt-2">
 
 </form>
 
@@ -99,7 +115,7 @@ include('header.php');
 
                     success: function (data) {
 
-                        if (data) {
+                        if (data) { //compensation record found
 
                             var compensationData = JSON.parse(data);
 
@@ -116,6 +132,9 @@ include('header.php');
                         }
 
                         $('.compensation-area').fadeIn("slow");
+                        $('.submit-btn').fadeIn("slow");
+                        $('#basic_sal').focus();
+
                     },
                     error: function (data) {
                         $("#msg").html("failed to connect to server");
@@ -145,6 +164,7 @@ include('header.php');
                         $("#msg").fadeIn("slow");
                         $('.selected-employee-area').fadeOut("slow");
                         $('.compensation-area').fadeOut("slow");
+                        $('.submit-btn').fadeOut("slow");
 
                     }
                     else {
