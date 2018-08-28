@@ -10,8 +10,8 @@ include('header.php');
     <h2 style="text-align:center; margin-top:10%;">Add/View Leaves for Employee</h2>
 
     <div class="form-group">
-        <label for="">Enter Employee CNIC/Code:</label>
-        <input class="form-control" type="text" id="employee_selection">
+        <label for="">Search Employee CNIC/Code:</label>
+        <input class="form-control" type="text" id="employee_selection" autofocus>
     </div>  
 
     <div class="selected-employee-area" style="display: none;">

@@ -9,7 +9,7 @@ include('header.php');
 
     <div class="form-group">
         <label for="">Search Employee CNIC/Code:</label>
-        <input class="form-control" type="text" id="employee_selection">
+        <input class="form-control" type="text" id="employee_selection" autofocus>
     </div>  
 
     <div class="selected-employee-area" style="display: none;">

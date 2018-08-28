@@ -28,8 +28,10 @@
                 <th>Employee Code</th>
                 <th>Mobile Number</th>
                 <th>Designation</th>
+                <th>Department</th>
                 <th>CNIC</th>
                 <th>Address</th>
+                <th>City</th>
                 <th>BankAccount</th>
             </tr>
         </thead>
@@ -70,12 +72,18 @@
             }, {
                 label: "Designation:",
                 name: "Designation"
+            },{
+                label: "Department:",
+                name: "Department"
             }, {
                 label: "CNIC:",
                 name: "CNIC"
             }, {
                 label: "Address:",
                 name: "Address",
+            },{
+                label: "City:",
+                name: "City",
             }, {
                 label: "Bank Account:",
                 name: "BankAccount",
@@ -181,12 +189,20 @@
                     data: "Designation",
                     defaultContent: '',
                 },
+                {
+                    data: "Department",
+                    defaultContent: '',
+                },
                 { 
                     data: "CNIC",
                     defaultContent: '',
                 },
                 { 
                     data: "Address",
+                    defaultContent: '',
+                },
+                {
+                    data: "City",
                     defaultContent: '',
                 },
                 {

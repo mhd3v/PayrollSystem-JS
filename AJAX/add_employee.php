@@ -12,13 +12,15 @@ $address = $_POST['address'];
 $dep = $_POST['dep'];
 $bank_acc = $_POST['bank_acc'];
 
-$query = "INSERT INTO `employees` (`Code`, `FullName`, `MobileNumber`, `Designation`, `CNIC`, `Address`, `BankAccount`) VALUES ('${code}', '${full_name}', '${mob_number}', '${designation}', '${cnic}', '${address}', '${bank_acc}')";
+$query = "INSERT INTO `employees` 
+(`Code`, `FullName`, `MobileNumber`, `Designation`, `Department`, `CNIC`, `Address`, `City`, `BankAccount`)
+VALUES ('${code}', '${full_name}', '${mob_number}', '${designation}', '{$dep}', '${cnic}', '${address}', '${city}', '${bank_acc}')";
 
 $res = mysqli_query($con, $query);
 
 if($res)
 echo 1;
 else
-echo 0;
+echo $query;
 
 ?>

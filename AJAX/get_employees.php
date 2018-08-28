@@ -4,7 +4,7 @@ include('../connection.php');
 
 $q = trim($_GET['term']);
 
-$query = "SELECT * FROM `employees` WHERE ((`Code` LIKE '%${q}%') OR (`CNIC` LIKE '%${q}%'))";
+$query = "SELECT * FROM `employees` WHERE ((`FullName` LIKE '%${q}%') OR (`Code` LIKE '%${q}%') OR (`CNIC` LIKE '%${q}%'))";
 
 $res = mysqli_query($con, $query);
 
