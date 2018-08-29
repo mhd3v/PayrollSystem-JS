@@ -32,9 +32,16 @@ include('header.php');
     </div>
 
     <div class="form-group month-area" style="display: none;">
+
         <label for="">Enter Month and Year:</label>
-        <input id="datepicker" disabled required/>
-        <small class="form-text text-muted">Select any day of the desired month using the icon</small>
+
+        <div class="input-group">
+            <input type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly required>
+            <label class="input-group-addon btn" for="month_year">
+                <span class="fa fa-calendar open-datetimepicker"></span>
+            </label>
+        </div>
+
     </div>
     
     <div class="alert alert-primary" id="msg" style="display:none"></div>
@@ -47,16 +54,19 @@ include('header.php');
 
     var selectedEmployeeId;
     var currentMonthYear = (new Date().getMonth()+1) + '-' + (new Date().getFullYear());
-    console.log(currentMonthYear)
 
     $('document').ready(function(){
 
-        $('#datepicker').datepicker({
-            uiLibrary: 'bootstrap4',
+        $('#month_year').datepicker({
             format: "mm-yyyy",
-            startView: "months", 
+            viewMode: "months", 
             minViewMode: "months",
-            value: currentMonthYear
+            autoclose: true,
+            defaultDate: currentMonthYear
+        });
+
+        $("open-datetimepicker").click(function(e){
+            $('#month_year').click();
         });
 
         $("#employee_selection").autocomplete({
@@ -86,27 +96,22 @@ include('header.php');
         $('form').on('submit', function(e) {
 
             e.preventDefault();
-            var monthYear = $('#datepicker').val();
 
             $.ajax({
                 type: 'post',
                 url: 'AJAX/calculate_pay.php',
-                data: $('form').serialize() + `&employee_id=${selectedEmployeeId}&month_year=${monthYear}`,
+                data: $('form').serialize() + `&employee_id=${selectedEmployeeId}`,
 
                 success: function (data) {
 
-                    if (data) {
-                        // $("#msg").html('Successfully inserted leave data');
-                        // $("#msg").fadeIn("slow");
-                        // $('.selected-employee-area').fadeOut("slow");
-                        // $('.leave-area').fadeOut("slow");
-                        // $('.submit-btn').fadeOut("slow");
+                    data = JSON.parse(data);
 
+                    if (data.Status == 1) {
                         console.log(data);
                     }
+
                     else {
-                        // $("#msg").html(data);
-                        // $("#msg").fadeIn("slow");
+                        alert(data.Message);
                     }
                 },
                 error: function (data) {

@@ -9,6 +9,7 @@
     <style>
 
     body{
+        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
         border: 3px solid black;
         padding:10px;
     }
@@ -130,12 +131,6 @@
                 <td>123123</td>
             </tr>
         </tfoot>
-        
-    </table>
-
-    <table style="width:100%; margin-top:20px;">
-
-        
         
     </table>
 

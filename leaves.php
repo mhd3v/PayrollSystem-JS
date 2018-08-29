@@ -90,8 +90,16 @@ include('header.php');
                 </div>
 
                 <div class="col-md-6">
-                    <label for="">Month/Year:</label>
-                    <input class="form-control" type="date" name="month_year" id="month_year" required/>
+
+                    <label for="">Select Month and Year:</label>
+
+                    <div class="input-group">
+                        <input type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly>
+                        <label class="input-group-addon btn" for="month_year">
+                            <span class="fa fa-calendar open-datetimepicker"></span>
+                        </label>
+                    </div>
+
                 </div>
          
             </div>
@@ -111,6 +119,17 @@ include('header.php');
     var selectedEmployeeId;
 
     $('document').ready(function(){
+
+        $('#month_year').datepicker({
+            format: "mm-yyyy",
+            viewMode: "months", 
+            minViewMode: "months",
+            autoclose: true,
+        });
+
+        $("open-datetimepicker").click(function(e){
+            $('#month_year').click();
+        });
 
         $("#employee_selection").autocomplete({
             source: "AJAX/get_employees.php",
@@ -170,8 +189,9 @@ include('header.php');
         };
 
         $('form').on('submit', function(e) {
-            e.preventDefault();
 
+            e.preventDefault();
+            
             $.ajax({
                 type: 'post',
                 url: 'AJAX/add_leave.php',

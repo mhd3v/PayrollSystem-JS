@@ -23,7 +23,7 @@ if(mysqli_num_rows($res) == 0) {    //no record for employee compensation
     (`EmployeeId`,`TotalAnnualLeaves`,`TotalSickLeaves`, `TotalCasualLeaves`,`LeavesWithoutPay`, `AnnualLeavesAvailed`,
     `SickLeavesAvailed`, `CasualLeavesAvailed`, `MonthYear`) 
     VALUES (${employee_id},${total_annual},${total_sick},${total_casual},${without_pay},${annual_availed},
-    ${sick_availed},${casual_availed},'${month_year}')";
+    ${sick_availed},${casual_availed}, NULLIF('$month_year', ''))";
 
     $res = mysqli_query($con, $query);
 
