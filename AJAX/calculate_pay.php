@@ -26,6 +26,7 @@ if($res){
         $total_deductions_amount = 0;
 
         $compensations = array();
+        $deductions = array();
 
         foreach($employee_compensations as $compensation_name => $compensation_amt){
             if($compensation_amt != 0){
@@ -49,13 +50,13 @@ if($res){
 
                 $sal_per_day = $basic_sal / $days_month;
                 
-                $leaves_without_pay = $employee_compensations['LeavesWithoutPay'];
+                $leaves_without_pay = $employee_leaves['LeavesWithoutPay'];
 
                 $leaves_without_pay_deduction = $sal_per_day * $leaves_without_pay;
 
                 $total_deductions_amount += $leaves_without_pay_deduction ;
-
-                $pay_data['LeavesWithoutPay'] =  $leaves_without_pay_deduction;
+                
+                $deductions['LeavesWithoutPay'] = $leaves_without_pay_deduction;
                 
             }
 
@@ -70,7 +71,7 @@ if($res){
             if(($loan_start_unix <= $current_month_year_unix) && ($loan_end_unix >= $current_month_year_unix)){
                 $installment = $employee_loans['InstallmentAmount'];
                 $total_deductions_amount += $installment;
-                $pay_data['LoanInstallment'] = $installment;
+                $deductions['LoanInstallment'] = $installment;
             }
 
         }
@@ -81,10 +82,12 @@ if($res){
         $pay_data['TotalCompensationsAmount'] = $total_compensations_amount;
         $pay_data['TotalDeductionsAmount'] =  $total_deductions_amount;
         $pay_data['Compensations'] = $compensations;
+        $pay_data['Deductions'] = $deductions;
         $pay_data['Employee'] = $employee_record;
         $pay_data['MonthYear'] = $month.'-'.$year;
 
         $pay_data['Status'] = 1;
+        
        
     }
 

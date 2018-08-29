@@ -3,7 +3,7 @@ $page_name = 'Generate Payslip';
 include('header.php');
 ?>
 
-<form style="margin:0 20% 0 20%;">
+<form style="margin:0 20% 0 20%;" id="GeneratePaySlipForm">
 
     <h2 style="text-align:center; margin-top:10%;">Generate Payslip for Employee</h2>
 
@@ -50,6 +50,11 @@ include('header.php');
 
 </form>
 
+<form action="payslip.php" method="post" id="payform" target="_blank">
+<input id="paydata" name="paydata" hidden>
+</form>
+
+
 <script>
 
     var selectedEmployeeId;
@@ -93,7 +98,7 @@ include('header.php');
                 .appendTo(ul);
         };
 
-        $('form').on('submit', function(e) {
+        $('#GeneratePaySlipForm').on('submit', function(e) {
 
             e.preventDefault();
 
@@ -105,9 +110,11 @@ include('header.php');
                 success: function (data) {
 
                     data = JSON.parse(data);
+                    
 
-                    if (data.Status == 1) {
-                        console.log(data);
+                    if(data.Status == 1){
+                        $("#paydata").val(JSON.stringify(data));
+                        $("#payform").submit();
                     }
 
                     else {
