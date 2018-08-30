@@ -175,39 +175,39 @@
                 },
                 { 
                     data: "FullName",
-                    defaultContent: '',
+                    defaultContent: '<i>Not set</i>'
                 },
                 { 
                     data: "Code",
-                    defaultContent: '',
+                    defaultContent: '<i>Not set</i>'
                 },
                 { 
                     data: "MobileNumber",
-                    defaultContent: '',
+                    defaultContent: '<i>Not set</i>',
                 },
                 {
                     data: "Designation",
-                    defaultContent: '',
+                    defaultContent: '<i>Not set</i>'
                 },
                 {
                     data: "Department",
-                    defaultContent: '',
+                    defaultContent: '<i>Not set</i>'
                 },
                 { 
                     data: "CNIC",
-                    defaultContent: '',
+                    defaultContent: '<i>Not set</i>'
                 },
                 { 
                     data: "Address",
-                    defaultContent: '',
+                    defaultContent: '<i>Not set</i>'
                 },
                 {
                     data: "City",
-                    defaultContent: '',
+                    defaultContent: '<i>Not set</i>'
                 },
                 {
                     data: 'BankAccount',
-                    defaultContent: '',       
+                    defaultContent: '<i>Not set</i>'      
                 }],
 
             order: [1, 'asc'],

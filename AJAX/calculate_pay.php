@@ -31,7 +31,7 @@ function calculate_pay($con, $id, $month_year_string){
             foreach($employee_compensations as $compensation_name => $compensation_amt){
                 if($compensation_amt != 0){
                     $total_compensations_amount += $compensation_amt;
-                    $compensations[$compensation_name] = $compensation_amt;
+                    $compensations[$compensation_name] = (int)$compensation_amt;
                 }
             }
 
