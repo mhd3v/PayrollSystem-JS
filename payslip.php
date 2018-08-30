@@ -11,37 +11,32 @@ $pay_data = json_decode($_POST['paydata'], true);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Payslip | <?=$pay_data['Employee']['FullName']?></title>
-
     <style>
-
     body{
         font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
         border: 3px solid black;
         padding:10px;
     }
-
     table {
         table-layout: fixed;
         border-collapse: collapse;
     }
     
-
     thead{
         text-align:left;
         margin-top:20px;
         border-top:3px solid black; 
         border-bottom:3px solid black;
     }
-
     .test{
         border-top:3px solid black; 
         border-bottom:3px solid black;
     }
-
     </style>
+    
 </head>
 <body>
-    <img src="assets/jazz-logo.jpg" style="position:absolute; z-index:-1;" width="10%" height="20%"/>
+    <img src="assets/jazz-logo.jpg" style="position:absolute; z-index:-1;" width="9%" height="20%"/>
     <h2 style="text-align:center;">Jazz</h2>
     <h5 style="text-align:center;">7 Park Rd, F-8 Markaz, Islamabad, Islamabad Capital Territory</h5>
     <br>
@@ -92,8 +87,9 @@ $pay_data = json_decode($_POST['paydata'], true);
         foreach($pay_data['Compensations'] as $compensation_name => $compensation_amt){ ?>
 
             <tr>
-            <td><?=$compensation_name?></td>
-            <td><?=$compensation_amt?></td>
+                <td><?=$compensation_name?></td>
+                <td><?=$compensation_amt?></td>
+            </tr>
 
         <?php
         } 
@@ -114,9 +110,9 @@ $pay_data = json_decode($_POST['paydata'], true);
         foreach($pay_data['Deductions'] as $deduction_name => $deduction_amt){ ?>
 
             <tr>
-            <td><?=$deduction_name?></td>
-            <td><?=$deduction_amt?></td>
-
+                <td><?=$deduction_name?></td>
+                <td><?=$deduction_amt?></td>
+            </tr>
         <?php
         } 
         ?>

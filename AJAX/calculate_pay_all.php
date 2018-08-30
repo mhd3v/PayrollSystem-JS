@@ -12,7 +12,7 @@ if($employees){
 
         $employee_id = $row['Id'];
 
-        $employee_pay = calculate_pay($con, $employee_id, '1-2018');
+        $employee_pay = calculate_pay($con, $employee_id, '1-2019');
 
         if($employee_pay['Status'] == 1){
             array_push($pay_data, $employee_pay);
