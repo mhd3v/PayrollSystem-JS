@@ -41,6 +41,7 @@ $pay_data = json_decode($_POST['paydata'], true);
     </style>
 </head>
 <body>
+    <img src="assets/jazz-logo.jpg" style="position:absolute; z-index:-1;" width="10%" height="20%"/>
     <h2 style="text-align:center;">Jazz</h2>
     <h5 style="text-align:center;">7 Park Rd, F-8 Markaz, Islamabad, Islamabad Capital Territory</h5>
     <br>
@@ -124,7 +125,7 @@ $pay_data = json_decode($_POST['paydata'], true);
     </table>
 
     <table style="width:100%">
-        <thead>
+        
             <tr class="test">
                 <td>Total Earnings</td>
                 <td><?=$pay_data['TotalCompensationsAmount']?></td>
@@ -137,7 +138,7 @@ $pay_data = json_decode($_POST['paydata'], true);
                 <td>Net Pay</td>
                 <td><?=$pay_data['NetPay']?></td>
             </tr>
-        </thead>
+        
     </table>
 
 </body>

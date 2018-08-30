@@ -94,7 +94,7 @@ include('header.php');
 
         }).data('ui-autocomplete')._renderItem = function (ul, item) {
              return $("<li>")
-                .append('Name: ' + item.FullName + ', CNIC: ' + item.CNIC + ', Employee Code: ' + item.Code)
+                .append('Name: ' + item.FullName + ',CNIC: ' + item.CNIC + ', Employee Code: ' + item.Code)
                 .appendTo(ul);
         };
 
@@ -104,7 +104,7 @@ include('header.php');
 
             $.ajax({
                 type: 'post',
-                url: 'AJAX/calculate_pay.php',
+                url: 'AJAX/calculate_pay_single.php',
                 data: $('form').serialize() + `&employee_id=${selectedEmployeeId}`,
 
                 success: function (data) {
@@ -128,8 +128,6 @@ include('header.php');
         });
 
     });
-
-   
 
 </script>
 

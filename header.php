@@ -20,6 +20,14 @@
 
     <script src="assets/bootstrap-datepicker.js" type="text/javascript"></script>
 
+    <style>
+    
+    .ui-autocomplete li:hover{
+        background-color:#F1F1F1;
+    }
+    
+    </style>
+
 </head>
 <body>
 

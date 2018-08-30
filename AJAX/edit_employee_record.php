@@ -6,7 +6,7 @@ $Id = $_POST['Id'];
 $propertyToChange = $_POST['propertyToChange'];
 $newVal = $_POST['newVal'];
 
-$query = "UPDATE `employees` SET `{$propertyToChange}` = '{$newVal}' WHERE Id = {$Id}";
+$query = "UPDATE `employees` SET `{$propertyToChange}` = NULLIF('{$newVal}','') WHERE Id = {$Id}";
 
 $res = mysqli_query($con, $query);
 
