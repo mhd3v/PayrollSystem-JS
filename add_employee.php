@@ -98,7 +98,7 @@ include('header.php');
                     if (data == 1){
                         $("#msg").html('Successfully added employee to database');
                         $('form').trigger("reset");
-                        $("#msg").fadeTo(2000, 500).slideUp(500, function(){
+                        $("#msg").fadeTo(1000, 500).slideUp(500, function(){
                             $("#msg").slideUp(500);
                         });
                     }

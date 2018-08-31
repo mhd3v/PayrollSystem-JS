@@ -7,9 +7,10 @@
     <title>Enrollments | Payroll System</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-        
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.17/css/jquery.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
+   
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
+
     <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css">
     <link rel="stylesheet" href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css">
     <link rel="stylesheet" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
@@ -20,7 +21,7 @@
 
     <?php include('navbar.php') ?>
     
-    <table id="example" class="display" cellspacing="0" width="100%">
+    <table id="example" class="table table-striped table-bordered" width="100%">
         <thead>
             <tr>
                 <th></th>
@@ -36,14 +37,17 @@
             </tr>
         </thead>
     </table>
-
-
+  
     <script src="assets/jquery-3.3.1.js"></script>
     <script src="assets/popper.min.js"></script>
     <script src="assets/bootstrap.min.js"></script>
-
+   
     <script src="assets/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+
     <script src="assets/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+    
     <script src="assets/dataTables.select.min.js"></script>
     <script src="assets/dataTables.keyTable.min.js"></script>
     <script src="assets/dataTables.editor.js"></script>
@@ -262,6 +266,7 @@
 
         });
 
+        table.buttons().container().css('margin-bottom','-45px');
         table.on('key-focus', function (e, datatable, cell) {   //tab key listener
             cell.edit();
         });
