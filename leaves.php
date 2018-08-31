@@ -191,32 +191,51 @@ include('header.php');
         $('form').on('submit', function(e) {
 
             e.preventDefault();
-            
-            $.ajax({
-                type: 'post',
-                url: 'AJAX/add_leave.php',
-                data: $('form').serialize() + `&employee_id=${selectedEmployeeId}`,
 
-                success: function (data) {
+            if($("#without_pay").val() == "" || $("#month_year").val() == ""){
+                return alert("Leaves without pay data must have both Total and Month Year!");
+            }
 
-                    if (data == 1) {
-                        $("#msg").html('Successfully inserted leave data');
-                        $("#msg").fadeTo(2000, 500).slideUp(500, function(){
-                            $("#msg").slideUp(500);
-                        });
-                        $('.selected-employee-area').fadeOut("slow");
-                        $('.leave-area').fadeOut("slow");
-                        $('.submit-btn').fadeOut("slow");
-                    }
-                    else {
-                        $("#msg").html(data);
-                        $("#msg").fadeIn("slow");
-                    }
-                },
-                error: function (data) {
-                    $("#msg").html("failed to connect to server");
+            else{
+    
+                var monthYearRegex = new RegExp('((0[1-9]{1})|(1[012]{1}))\-[1-9]{1}[0-9]{3}'); //regex for month-year format
+
+                if(!(monthYearRegex.test($("#month_year").val())))
+                    return alert('Month year format not correct, use MM-YYYY, for example 01-2018');
+
+                else{
+
+                    $.ajax({
+                        type: 'post',
+                        url: 'AJAX/add_leave.php',
+                        data: $('form').serialize() + `&employee_id=${selectedEmployeeId}`,
+
+                        success: function (data) {
+
+                            if (data == 1) {
+                                $("#msg").html('Successfully inserted leave data');
+                                $("#msg").fadeTo(1000, 500).slideUp(500, function(){
+                                    $("#msg").slideUp(500);
+                                });
+                                $('.selected-employee-area').fadeOut("slow");
+                                $('.leave-area').fadeOut("slow");
+                                $('.submit-btn').fadeOut("slow");
+                            }
+                            else {
+                                $("#msg").html(data);
+                                $("#msg").fadeIn("slow");
+                            }
+                        },
+                        error: function (data) {
+                            $("#msg").html("failed to connect to server");
+                        }
+                    }); 
+
                 }
-            }); 
+
+            }
+            
+            
         });
 
     });

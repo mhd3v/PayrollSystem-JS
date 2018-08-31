@@ -6,15 +6,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Monthly Salaries | Payroll System</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css">
+    <?php include('datatables-styles.php'); ?>
 
     <link href="assets/bootstrap-datepicker.standalone.min.css" rel="stylesheet" type="text/css" />
+
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     
     <style>
@@ -32,13 +27,16 @@
     <?php include('navbar.php') ?>
 
     <form style="margin:0 20% 2% 20%;" id="month-year-form">
+    
         <h2 style="text-align:center; margin-top:10%;">View Salary Data for month</h2>
 
-        <div class="input-group">
-            <input style="height:35px;" type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly required>
-            <label style="height:35px;" class="input-group-addon btn calendar-icon" for="month_year">
-                <span class="fa fa-calendar open-datetimepicker"></span>
-            </label>
+        <div class="row form-group justify-content-center">
+            <div class="input-group col-10 col-sm-4">
+                <input style="height:35px;" type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly required>
+                <label style="height:35px;" class="input-group-addon btn calendar-icon" for="month_year">
+                    <span class="fa fa-calendar open-datetimepicker"></span>
+                </label>
+            </div>
         </div>
 
         <div class="text-center">
@@ -47,7 +45,7 @@
         
     </form>
     
-    <div id="table-wrapper" style="display:none">
+    <div id="table-wrapper" class="table-responsive" style="display:none">
         <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
             <thead>
                 <tr>
@@ -68,24 +66,7 @@
         <input type="text" name="selected-records" id="selected-records" hidden>
     </form>
 
-    <script src="assets/jquery-3.3.1.js"></script>
-    <script src="assets/popper.min.js"></script>
-    <script src="assets/bootstrap.min.js"></script>
-
-    <script src="assets/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    
-
-    <script src="assets/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
-
-    <script src="assets/dataTables.select.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <?php include('datatables-scripts.php')?>
 
     <script src="assets/bootstrap-datepicker.js" type="text/javascript"></script>
 
@@ -94,8 +75,6 @@
     var table;
 
     $(document).ready(function () {
-
-        $('#test').hide();
 
         var currentMonthYear = (new Date().getMonth()+1) + '-' + (new Date().getFullYear());
 
@@ -145,6 +124,8 @@
                     }
                 },
 
+                responsive:true,
+
                 columns: [
                     {
                         data: null,
@@ -186,7 +167,7 @@
                 lengthMenu: [[10, 25, 50, -1]],
 
                 buttons: [
-                    'selectAll','selectNone','csv', 'excel', 'pdf', 'print', 
+                    'selectAll','selectNone', 'excel', 'pdf', 
                     {
                         text: 'Generate Selected Payslip(s)',
                         action: function ( e, dt, node, config ) {

@@ -5,63 +5,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Enrollments | Payroll System</title>
+    <?php include('datatables-styles.php') ?>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
-   
-    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.bootstrap4.min.css">
-
-    <link rel="stylesheet" href="https://cdn.datatables.net/select/1.2.6/css/select.dataTables.min.css">
-    <link rel="stylesheet" href="https://editor.datatables.net/extensions/Editor/css/editor.dataTables.min.css">
-    <link rel="stylesheet" href="https://cdn.datatables.net/keytable/2.4.1/css/keyTable.dataTables.min.css">
-    
 </head>
 
 <body>
 
     <?php include('navbar.php') ?>
-    
-    <table id="example" class="table table-striped table-bordered" width="100%">
-        <thead>
-            <tr>
-                <th></th>
-                <th>Full Name</th>
-                <th>Employee Code</th>
-                <th>Mobile Number</th>
-                <th>Designation</th>
-                <th>Department</th>
-                <th>CNIC</th>
-                <th>Address</th>
-                <th>City</th>
-                <th>BankAccount</th>
-            </tr>
-        </thead>
-    </table>
-  
-    <script src="assets/jquery-3.3.1.js"></script>
-    <script src="assets/popper.min.js"></script>
-    <script src="assets/bootstrap.min.js"></script>
-   
-    <script src="assets/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
-    <script src="assets/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
+    <div id="table-wrapper" class="table-responsive mt-3">
+        <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Full Name</th>
+                    <th>Employee Code</th>
+                    <th>Mobile Number</th>
+                    <th>Designation</th>
+                    <th>Department</th>
+                    <th>CNIC</th>
+                    <th>Address</th>
+                    <th>City</th>
+                    <th>BankAccount</th>
+                </tr>
+            </thead>
+        </table>
+    </div>
     
-    <script src="assets/dataTables.select.min.js"></script>
-    <script src="assets/dataTables.keyTable.min.js"></script>
-    <script src="assets/dataTables.editor.js"></script>
-
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
+    <?php include('datatables-scripts.php'); ?>
 
     <script>
 
-    var editor; // use a global for the submit and return data rendering in the examples
+    var editor;
     var table;
 
     $(document).ready(function () {
@@ -202,6 +177,8 @@
                 }
             },
 
+            responsive: true,
+
             columns: [
                 {
                     data: null,
@@ -254,7 +231,7 @@
             },
 
             buttons: [
-                'selectAll','selectNone','csv', 'excel', 'pdf', 'print', 
+                'selectAll','selectNone', 'excel', 'pdf',
                 { extend: "remove", editor: editor }
             ],
 
@@ -263,10 +240,8 @@
                 columns: ':not(:first-child)',
                 editOnFocus: true
             },
-
         });
-
-        table.buttons().container().css('margin-bottom','-45px');
+  
         table.on('key-focus', function (e, datatable, cell) {   //tab key listener
             cell.edit();
         });
