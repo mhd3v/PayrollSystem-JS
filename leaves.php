@@ -95,7 +95,7 @@ include('header.php');
 
                     <div class="input-group">
                         <input type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly>
-                        <label class="input-group-addon btn" for="month_year">
+                        <label class="input-group-addon btn calendar-icon" for="month_year">
                             <span class="fa fa-calendar open-datetimepicker"></span>
                         </label>
                     </div>
@@ -201,7 +201,9 @@ include('header.php');
 
                     if (data == 1) {
                         $("#msg").html('Successfully inserted leave data');
-                        $("#msg").fadeIn("slow");
+                        $("#msg").fadeTo(2000, 500).slideUp(500, function(){
+                            $("#msg").slideUp(500);
+                        });
                         $('.selected-employee-area').fadeOut("slow");
                         $('.leave-area').fadeOut("slow");
                         $('.submit-btn').fadeOut("slow");

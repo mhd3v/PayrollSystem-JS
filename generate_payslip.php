@@ -37,7 +37,7 @@ include('header.php');
 
         <div class="input-group">
             <input type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly required>
-            <label class="input-group-addon btn" for="month_year">
+            <label class="input-group-addon btn calendar-icon" for="month_year">
                 <span class="fa fa-calendar open-datetimepicker"></span>
             </label>
         </div>
@@ -102,6 +102,8 @@ include('header.php');
 
             e.preventDefault();
 
+            console.log($('#month_year').val());
+
             $.ajax({
                 type: 'post',
                 url: 'AJAX/calculate_pay_single.php',
@@ -111,7 +113,6 @@ include('header.php');
 
                     data = JSON.parse(data);
                     
-
                     if(data.Status == 1){
                         $("#paydata").val(JSON.stringify(data));
                         $("#payform").submit();

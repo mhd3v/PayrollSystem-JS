@@ -15,7 +15,7 @@ $pay_data = json_decode($_POST['paydata'], true);
     body{
         font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
         border: 3px solid black;
-        padding:10px;
+        padding:5%;
     }
     table {
         table-layout: fixed;
@@ -32,11 +32,18 @@ $pay_data = json_decode($_POST['paydata'], true);
         border-top:3px solid black; 
         border-bottom:3px solid black;
     }
+
+    img{
+        max-width: 9%;
+        max-height:20%;
+        width:auto;
+        height:auto;
+    }
     </style>
     
 </head>
 <body>
-    <img src="assets/jazz-logo.jpg" style="position:absolute; z-index:-1;" width="9%" height="20%"/>
+    <img src="assets/jazz-logo.jpg" style="position:absolute; z-index:-1;"/>
     <h2 style="text-align:center;">Jazz</h2>
     <h5 style="text-align:center;">7 Park Rd, F-8 Markaz, Islamabad, Islamabad Capital Territory</h5>
     <br>

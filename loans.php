@@ -153,7 +153,9 @@ include('header.php');
 
                     if (data == 1) {
                         $("#msg").html('Successfully inserted loan data');
-                        $("#msg").fadeIn("slow");
+                        $("#msg").fadeTo(2000, 500).slideUp(500, function(){
+                            $("#msg").slideUp(500);
+                        });
                         $('.selected-employee-area').fadeOut("slow");
                         $('.loan-area').fadeOut("slow");
                         $('.submit-btn').fadeOut("slow");

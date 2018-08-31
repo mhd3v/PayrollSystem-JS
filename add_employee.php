@@ -9,13 +9,38 @@ include('header.php');
 
     <fieldset class="border p-2 form-group">
         
+        <legend class="w-auto">Office Details</legend>
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <label for="">Code:</label>
+                <input class="form-control" type="text" name="code" autofocus>
+            </div>
+
+            <div class="col-sm-4">
+                <label for="">Department:</label>
+                <input class="form-control" type="text" name="dep">
+            </div>
+
+            <div class="col-sm-4">
+                <label for="">Designation:</label>
+                <input class="form-control" type="text" name="designation">
+            </div>
+
+        </div>
+
+    </fieldset>
+
+    <fieldset class="border p-2 form-group">
+        
         <legend class="w-auto">Personal Details</legend>
 
         <div class="row form-group">
         
             <div class="col-sm-7">
                 <label for="">Full Name:</label>
-                <input class="form-control" type="text" name="full_name" autofocus>
+                <input class="form-control" type="text" name="full_name">
             </div>
 
             <div class="col-sm-5 text-nowrap">
@@ -51,31 +76,6 @@ include('header.php');
 
     </fieldset>
 
-    <fieldset class="border p-2 form-group">
-        
-        <legend class="w-auto">Office Details</legend>
-
-        <div class="row">
-
-            <div class="col-sm-4">
-                <label for="">Designation:</label>
-                <input class="form-control" type="text" name="designation">
-            </div>
-
-            <div class="col-sm-4">
-                <label for="">Code:</label>
-                <input class="form-control" type="text" name="code">
-            </div>
-
-            <div class="col-sm-4">
-                <label for="">Department:</label>
-                <input class="form-control" type="text" name="dep">
-            </div>
-
-        </div>
-
-    </fieldset>
-
     <div class="alert alert-primary" id="msg" style="display:none"></div>
     
     <input type="submit" class="btn btn-success">
@@ -97,7 +97,10 @@ include('header.php');
                     
                     if (data == 1){
                         $("#msg").html('Successfully added employee to database');
-                        $("#msg").show();
+                        $('form').trigger("reset");
+                        $("#msg").fadeTo(2000, 500).slideUp(500, function(){
+                            $("#msg").slideUp(500);
+                        });
                     }
                     else {
                         $("#msg").html(data);

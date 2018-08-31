@@ -25,6 +25,12 @@
     .ui-autocomplete li:hover{
         background-color:#F1F1F1;
     }
+
+    .calendar-icon{
+        background-color:#E9ECEF;
+        border: 1px solid #ced4da;
+        border-radius: 0 .25rem .25rem 0;
+    }
     
     </style>
 

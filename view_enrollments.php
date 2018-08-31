@@ -37,6 +37,7 @@
         </thead>
     </table>
 
+
     <script src="assets/jquery-3.3.1.js"></script>
     <script src="assets/popper.min.js"></script>
     <script src="assets/bootstrap.min.js"></script>
@@ -46,6 +47,13 @@
     <script src="assets/dataTables.select.min.js"></script>
     <script src="assets/dataTables.keyTable.min.js"></script>
     <script src="assets/dataTables.editor.js"></script>
+
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.flash.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js"></script>
 
     <script>
 
@@ -99,8 +107,6 @@
 
                 console.log('coming in ajax function');
 
-                //console.log(d.data);
-
                 var output = { data: [] };
 
                 if (d.action === 'create') {
@@ -112,7 +118,33 @@
                 }
 
                  if (d.action === 'remove') {
-                    console.log('Remove ajax call');
+
+                    var employeeRowsToDelete = [];
+
+                    for(var i = 0; i < Object.keys(d.data).length; i++){
+                        employeeRowsToDelete.push(Object.keys(d.data)[i]);
+                    };
+                    
+                    $.ajax({
+                        type: 'POST',
+                        url: 'AJAX/delete_employees.php',
+                        data: {'recordsToDelete' : employeeRowsToDelete},
+
+                        success: function (data) {
+
+                            if (data != 0) {
+                                output.data.push(JSON.parse(data));
+                                successCallback(output);
+                            }
+                            else {
+                                alert('Failed to delete rows');
+                            }
+
+                        },
+                        error: function (returnData) {
+                            $("#msg").html("failed to connect to server");
+                        }
+                    }); 
                 }
 
                 if(d.action == 'edit'){
@@ -218,6 +250,7 @@
             },
 
             buttons: [
+                'selectAll','selectNone','csv', 'excel', 'pdf', 'print', 
                 { extend: "remove", editor: editor }
             ],
 

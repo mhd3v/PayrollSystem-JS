@@ -6,8 +6,10 @@ if(isset($records)){
 
     require_once __DIR__ . '/vendor/autoload.php';
     $mpdf = new \Mpdf\Mpdf();
-   
+
     $records = json_decode($records, true); 
+    $num_record = sizeof($records);
+    $main_counter = 1;
         
     ob_start();?>
 
@@ -17,7 +19,7 @@ if(isset($records)){
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Payslip | Mahad </title>
+        <title>Payslip</title>
 
         <style>
 
@@ -45,36 +47,38 @@ if(isset($records)){
         <br>
 
         <h4 style="text-align:center;">Payslip for: <?=$record['MonthYear']?></h4>
+        
+        <div style="width:1000px;">
 
-        <table style="width:100%">
+        <table style="width:100%;overflow: wrap"  width="100%" autosize="1">
 
             <tr>
-                <td>Employee Code</td>
-                <td>:<?=$record['Employee']['Code']?></td>
-                <td>Full Name</td>
-                <td>:<?=$record['Employee']['FullName']?></td>
+                <td style="width:100pt">Employee Code</td>
+                <td style="width:100pt">:<?=$record['Employee']['Code']?></td>
+                <td style="width:100pt">Full Name</td>
+                <td style="width:100pt">:<?=$record['Employee']['FullName']?></td>
             </tr>
             <tr>
-                <td>Mobile Number</td>
-                <td>:<?=$record['Employee']['MobileNumber']?></td>
-                <td>Designation</td>
-                <td>:<?=$record['Employee']['Designation']?></td>
+                <td style="width:100pt">Mobile Number</td>
+                <td style="width:100pt">:<?=$record['Employee']['MobileNumber']?></td>
+                <td style="width:100pt">Designation</td>
+                <td style="width:100pt">:<?=$record['Employee']['Designation']?></td>
             </tr>
             <tr>
-                <td>CNIC</td>
-                <td>:<?=$record['Employee']['CNIC']?></td>
-                <td>Department</td>
-                <td>:<?=$record['Employee']['Department']?></td>
+                <td style="width:100pt">CNIC</td>
+                <td style="width:100pt">:<?=$record['Employee']['CNIC']?></td>
+                <td style="width:100pt">Department</td>
+                <td style="width:100pt">:<?=$record['Employee']['Department']?></td>
             </tr>
             <tr>
-                <td>City</td>
-                <td>:<?=$record['Employee']['City']?></td>
-                <td>Address</td>
-                <td>:<?=$record['Employee']['Address']?></td>
+                <td style="width:100pt">City</td>
+                <td style="width:100pt">:<?=$record['Employee']['City']?></td>
+                <td style="width:100pt">Address</td>
+                <td style="width:100pt">:<?=$record['Employee']['Address']?></td>
             </tr>
             <tr>
-                <td>Bank Account</td>
-                <td>:<?=$record['Employee']['BankAccount']?></td>
+                <td style="width:100pt">Bank Account</td>
+                <td style="width:100pt">:<?=$record['Employee']['BankAccount']?></td>
             </tr>
 
             <tr>
@@ -92,8 +96,8 @@ if(isset($records)){
             foreach($record['Compensations'] as $compensation_name => $compensation_amt){ ?>
 
             <tr>
-                <td><?=$compensation_name?></td>
-                <td><?=$compensation_amt?></td>
+                <td style="width:100pt"><?=$compensation_name?></td>
+                <td style="width:100pt"><?=$compensation_amt?></td>
                 
                 <?php 
                 if(isset(array_values($deductions)[$count])){?> 
@@ -106,22 +110,26 @@ if(isset($records)){
     
 
             <tr class="test">
-                <td style="border-top:3px solid black; border-bottom:3px solid black;">Total Earnings</td>
-                <td style="border-top:3px solid black; border-bottom:3px solid black;"><?=$record['TotalCompensationsAmount']?></td>
-                <td style="border-top:3px solid black; border-bottom:3px solid black;">TotalDeductions</td>
-                <td style="border-top:3px solid black; border-bottom:3px solid black;"><?=$record['TotalDeductionsAmount']?></td>
+                <td style="border-top:3px solid black; border-bottom:3px solid black;width:100pt">Total Earnings</td>
+                <td style="border-top:3px solid black; border-bottom:3px solid black;width:100pt"><?=$record['TotalCompensationsAmount']?></td>
+                <td style="border-top:3px solid black; border-bottom:3px solid black;width:100pt">TotalDeductions</td>
+                <td style="border-top:3px solid black; border-bottom:3px solid black;width:100pt"><?=$record['TotalDeductionsAmount']?></td>
             </tr>
             <tr>
-                <td></td>
-                <td></td>
-                <td>Net Pay</td>
-                <td><?=$record['NetPay']?></td>
+                <td style="width:100pt"></td>
+                <td style="width:100pt"></td>
+                <td style="width:100pt">Net Pay</td>
+                <td style="width:100pt"><?=$record['NetPay']?></td>
             </tr>
             
         </table>
+        </div>
         
-        
+        <?php if($main_counter != $num_record){ ?>
         <pagebreak />
+        <?php } 
+        $main_counter++;
+        ?>
 
     <?php } ?>
     </body>
@@ -132,9 +140,10 @@ if(isset($records)){
 $HTMLoutput = ob_get_contents();
 ob_end_clean();
 
+
 $mpdf->WriteHTML($HTMLoutput);
 
-$mpdf->Output();
+$mpdf->Output('Payslips.pdf');
 
 }
 
