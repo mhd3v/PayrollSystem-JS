@@ -17,6 +17,7 @@
         <div class="dropdown-menu">
           <a class="dropdown-item" href="add_employee.php">Add Employee</a>
           <a class="dropdown-item" href="view_enrollments.php">View Enrollments</a>
+          <a class="dropdown-item" href="import_employees.php">Bulk Import Employees</a>
         </div>
       </li>
 

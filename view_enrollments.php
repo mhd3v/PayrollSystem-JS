@@ -19,7 +19,7 @@
                 <tr>
                     <th></th>
                     <th>Full Name</th>
-                    <th>Employee Code</th>
+                    <th>Code</th>
                     <th>Mobile Number</th>
                     <th>Designation</th>
                     <th>Department</th>
@@ -231,7 +231,14 @@
             },
 
             buttons: [
-                'selectAll','selectNone', 'excel', 'pdf',
+                'selectAll','selectNone',
+                {
+                    extend: 'csv',
+                    text: 'CSV',
+                    exportOptions: {
+                        columns: ':not(:first-child)'
+                    }
+                }, 'excel', 'pdf',
                 { extend: "remove", editor: editor }
             ],
 

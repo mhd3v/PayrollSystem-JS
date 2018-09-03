@@ -143,7 +143,7 @@ ob_end_clean();
 
 $mpdf->WriteHTML($HTMLoutput);
 
-$mpdf->Output('Payslips.pdf');
+$mpdf->Output();
 
 }
 
