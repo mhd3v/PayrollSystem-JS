@@ -31,6 +31,10 @@
         border: 1px solid #ced4da;
         border-radius: 0 .25rem .25rem 0;
     }
+
+    .error{
+        color:red;
+    }
     
     </style>
 

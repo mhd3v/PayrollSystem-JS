@@ -36,7 +36,7 @@ include('header.php');
         <label for="">Enter Month and Year:</label>
 
         <div class="input-group">
-            <input type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly required>
+            <input type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" required>
             <label class="input-group-addon btn calendar-icon" for="month_year">
                 <span class="fa fa-calendar open-datetimepicker"></span>
             </label>
@@ -58,7 +58,7 @@ include('header.php');
 <script>
 
     var selectedEmployeeId;
-    var currentMonthYear = (new Date().getMonth()+1) + '-' + (new Date().getFullYear());
+    var currentMonthYear = (new Date().getMonth()+1) + '/' + (new Date().getFullYear());
 
     $('document').ready(function(){
 
@@ -67,7 +67,6 @@ include('header.php');
             viewMode: "months", 
             minViewMode: "months",
             autoclose: true,
-            defaultDate: currentMonthYear
         });
 
         $("open-datetimepicker").click(function(e){
@@ -90,6 +89,7 @@ include('header.php');
                 $('.submit-btn').fadeIn("slow");
                 $("#msg").fadeOut("slow");
 
+                $("#month_year").datepicker( "setDate" , currentMonthYear);
             },
 
         }).data('ui-autocomplete')._renderItem = function (ul, item) {
@@ -98,11 +98,20 @@ include('header.php');
                 .appendTo(ul);
         };
 
+        //====================================== Autocomplete End ====================================================
+
         $('#GeneratePaySlipForm').on('submit', function(e) {
 
             e.preventDefault();
 
-            console.log($('#month_year').val());
+            if($("#month_year").val() == ""){
+                return alert('Fill in month-year field');
+            }
+
+            var monthYearRegex = new RegExp('((0[1-9]{1})|(1[012]{1}))\-[1-9]{1}[0-9]{3}'); //regex for month-year format
+
+            if(!(monthYearRegex.test($("#month_year").val())))
+                return alert('Month year format not correct, use MM-YYYY, for example 01-2018');
 
             $.ajax({
                 type: 'post',
@@ -123,7 +132,7 @@ include('header.php');
                     }
                 },
                 error: function (data) {
-                    $("#msg").html("failed to connect to server");
+                    $("#msg").html("Failed to connect to server");
                 }
             }); 
         });

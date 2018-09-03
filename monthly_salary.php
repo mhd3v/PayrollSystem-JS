@@ -28,11 +28,11 @@
 
     <form style="margin:0 20% 2% 20%;" id="month-year-form">
     
-        <h2 style="text-align:center; margin-top:10%;">View Salary Data for month</h2>
+        <h2 style="text-align:center; margin-top:10%;">View Monthly Salary Data</h2>
 
         <div class="row form-group justify-content-center">
             <div class="input-group col-10 col-sm-4">
-                <input style="height:35px;" type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly required>
+                <input style="height:35px;" type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" required>
                 <label style="height:35px;" class="input-group-addon btn calendar-icon" for="month_year">
                     <span class="fa fa-calendar open-datetimepicker"></span>
                 </label>
@@ -82,9 +82,10 @@
             format: "mm-yyyy",
             viewMode: "months", 
             minViewMode: "months",
-            autoclose: true,
-            defaultDate: currentMonthYear
+            autoclose: true
         });
+
+        $("#month_year").datepicker( "setDate" , currentMonthYear);
 
         $("open-datetimepicker").click(function(e){
             $('#month_year').click();
@@ -95,13 +96,22 @@
             e.preventDefault();
 
             if($('#month_year').val() != ""){
+
+                var monthYearRegex = new RegExp('((0[1-9]{1})|(1[012]{1}))\-[1-9]{1}[0-9]{3}'); //regex for month-year format
+
+                if(!(monthYearRegex.test($("#month_year").val())))
+                    return alert('Month year format not correct, use MM-YYYY, for example 01-2018');
             
                 if($.fn.DataTable.isDataTable('#example')) 
-                table.destroy();
+                    table.destroy();
 
                 intializeTable();
                 $('#table-wrapper').show();
 
+            }
+
+            else{
+                return alert("Fill in month-year field");
             }
 
         });

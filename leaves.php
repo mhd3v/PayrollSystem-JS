@@ -44,17 +44,17 @@ include('header.php');
 
                 <div class="col-md-4">
                     <label for="">Total Annual Leaves:</label>
-                    <input class="form-control" type="number" name="total_annual" id="total_annual"/>
+                    <input class="form-control leave-data" type="number" name="total_annual" id="total_annual"/>
                 </div>
 
                 <div class="col-md-4">
                     <label for="">Total Sick Leaves:</label>
-                    <input class="form-control" type="number" name="total_sick" id="total_sick"/>
+                    <input class="form-control leave-data" type="number" name="total_sick" id="total_sick"/>
                 </div>
 
                 <div class="col-md-4">
                     <label for="">Total Casual Leaves:</label>
-                    <input class="form-control" type="number" name="total_casual" id="total_casual"/>
+                    <input class="form-control leave-data" type="number" name="total_casual" id="total_casual"/>
                 </div>
 
             </div>
@@ -63,17 +63,17 @@ include('header.php');
                 
                 <div class="col-md-4">
                     <label for="">Annual leaves availed:</label>
-                    <input class="form-control" type="number" name="annual_availed" id="annual_availed"/>
+                    <input class="form-control leave-data" type="number" name="annual_availed" id="annual_availed"/>
                 </div>
 
                 <div class="col-md-4">
                     <label for="">Sick leaves availed:</label>
-                    <input class="form-control" type="number" name="sick_availed" id="sick_availed"/>
+                    <input class="form-control leave-data" type="number" name="sick_availed" id="sick_availed"/>
                 </div>
 
                 <div class="col-md-4">
                     <label for="">Casual leaves availed:</label>
-                    <input class="form-control" type="number" name="casual_availed" id="casual_availed"/>
+                    <input class="form-control leave-data" type="number" name="casual_availed" id="casual_availed"/>
                 </div>
 
             </div>
@@ -86,7 +86,7 @@ include('header.php');
 
                 <div class="col-md-6">
                     <label for="">Total:</label>
-                    <input class="form-control" type="number" name="without_pay" id="without_pay"/>
+                    <input class="form-control leave-data" type="number" name="without_pay" id="without_pay"/>
                 </div>
 
                 <div class="col-md-6">
@@ -94,7 +94,7 @@ include('header.php');
                     <label for="">Select Month and Year:</label>
 
                     <div class="input-group">
-                        <input type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" readonly>
+                        <input type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled">
                         <label class="input-group-addon btn calendar-icon" for="month_year">
                             <span class="fa fa-calendar open-datetimepicker"></span>
                         </label>
@@ -188,59 +188,73 @@ include('header.php');
                 .appendTo(ul);
         };
 
+        //====================================== Autocomplete End ====================================================
+
         $('form').on('submit', function(e) {
 
             e.preventDefault();
 
-            if($("#without_pay").val() == "" || $("#month_year").val() == ""){
-                return alert("Leaves without pay data must have both Total and Month Year!");
-            }
+            var error = false;
 
-            else{
-    
-                var monthYearRegex = new RegExp('((0[1-9]{1})|(1[012]{1}))\-[1-9]{1}[0-9]{3}'); //regex for month-year format
+            $.each($(".leave-data"), function(input){
 
-                if(!(monthYearRegex.test($("#month_year").val())))
-                    return alert('Month year format not correct, use MM-YYYY, for example 01-2018');
-
-                else{
-
-                    $.ajax({
-                        type: 'post',
-                        url: 'AJAX/add_leave.php',
-                        data: $('form').serialize() + `&employee_id=${selectedEmployeeId}`,
-
-                        success: function (data) {
-
-                            if (data == 1) {
-                                $("#msg").html('Successfully inserted leave data');
-                                $("#msg").fadeTo(1000, 500).slideUp(500, function(){
-                                    $("#msg").slideUp(500);
-                                });
-                                $('.selected-employee-area').fadeOut("slow");
-                                $('.leave-area').fadeOut("slow");
-                                $('.submit-btn').fadeOut("slow");
-                            }
-                            else {
-                                $("#msg").html(data);
-                                $("#msg").fadeIn("slow");
-                            }
-                        },
-                        error: function (data) {
-                            $("#msg").html("failed to connect to server");
-                        }
-                    }); 
-
+                if(isNaN($(this).val())){
+                    $(this).addClass('error');
+                    error = true;
                 }
 
+            });
+
+            if(error)
+                return alert('Leave fields can only contain numbers');;
+
+            if($("#without_pay").val() != "" || $("#month_year").val() != ""){
+
+                if($("#month_year").val() == "")
+                    return alert('Fill in month-year field');
+                if($("#without_pay").val() == "")
+                    return alert('Fill in days without pay field');
+            
             }
-            
-            
+    
+            var monthYearRegex = new RegExp('((0[1-9]{1})|(1[012]{1}))\-[1-9]{1}[0-9]{3}'); //regex for month-year format
+
+            if($("#month_year").val() != "" && !(monthYearRegex.test($("#month_year").val())))
+                return alert('Month year format not correct, use MM-YYYY, for example 01-2018');
+
+            $.ajax({
+                type: 'post',
+                url: 'AJAX/add_leave.php',
+                data: $('form').serialize() + `&employee_id=${selectedEmployeeId}`,
+
+                success: function (data) {
+
+                    if (data == 1) {
+                        $("#msg").html('Successfully inserted leave data');
+                        $("#msg").fadeTo(1000, 500).slideUp(500, function(){
+                            $("#msg").slideUp(500);
+                        });
+                        $('.selected-employee-area').fadeOut("slow");
+                        $('.leave-area').fadeOut("slow");
+                        $('.submit-btn').fadeOut("slow");
+                    }
+                    else {
+                        $("#msg").html(data);
+                        $("#msg").fadeIn("slow");
+                    }
+                },
+                error: function (data) {
+                    $("#msg").html("failed to connect to server");
+                }
+            }); 
+
+        });
+
+        $('.leave-data').on('focus', function(){
+            $(this).removeClass('error');
         });
 
     });
-
-   
 
 </script>
 

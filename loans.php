@@ -141,6 +141,8 @@ include('header.php');
                 .appendTo(ul);
         };
 
+        //====================================== Autocomplete End ====================================================
+
         $('form').on('submit', function(e) {
             e.preventDefault();
 

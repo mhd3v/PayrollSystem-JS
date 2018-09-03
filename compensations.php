@@ -45,17 +45,17 @@ include('header.php');
 
                 <div class="col-md-4">
                     <label for="">Basic Salary:</label>
-                    <input class="form-control" type="text" name="basic_sal" id="basic_sal" />
+                    <input class="form-control compensation" type="number" name="basic_sal" id="basic_sal" required/>
                 </div>
 
                 <div class="col-md-4">
                     <label for="">House Rent:</label>
-                    <input class="form-control" type="text" name="house_rent" id="house_rent" />
+                    <input class="form-control compensation" type="number" name="house_rent" id="house_rent" />
                 </div>
 
                 <div class="col-md-4">
                     <label for="">Fuel Allowance:</label>
-                    <input class="form-control" type="text" name="fuel_allowance" id="fuel_allowance" />
+                    <input class="form-control compensation" type="number" name="fuel_allowance" id="fuel_allowance" />
                 </div>
 
             </div>
@@ -64,17 +64,17 @@ include('header.php');
                 
                 <div class="col-md-4">
                     <label for="">Utility Allowance:</label>
-                    <input class="form-control" type="text" name="utility_allowance" id="utility_allowance" />
+                    <input class="form-control compensation" type="number" name="utility_allowance" id="utility_allowance" />
                 </div>
                 
                 <div class="col-md-4">
                     <label for="">Mobile Allowance:</label>
-                    <input class="form-control" type="text" name="mobile_allowance" id="mobile_allowance" />
+                    <input class="form-control compensation" type="number" name="mobile_allowance" id="mobile_allowance" />
                 </div>
 
                 <div class="col-md-4">
                     <label for="">Other Allowance:</label>
-                    <input class="form-control" type="text" name="other_allowance" id="other_allowance" />
+                    <input class="form-control compensation" type="number" name="other_allowance" id="other_allowance" />
                 </div>
                 
             </div>
@@ -149,9 +149,31 @@ include('header.php');
                 .appendTo(ul);
         };
 
+        //====================================== Autocomplete End ====================================================
+
         $('form').on('submit', function(e) {
+
             e.preventDefault();
 
+            var error = false;
+
+            $.each($(".compensation"), function(input){
+
+                if(isNaN($(this).val())){
+                    $(this).addClass('error');
+                    alert('Compensation fields can only contain numbers');
+                    error = true;
+                    return false;
+                }
+
+            });
+
+            if(error)
+                return false;
+
+            if($('#basic_sal') == "")
+                return alert('Basic salary needs to be set');
+            
             $.ajax({
                 type: 'post',
                 url: 'AJAX/add_compensations.php',
@@ -178,12 +200,14 @@ include('header.php');
                     $("#msg").html("failed to connect to server");
                 }
             }); 
+
         });
 
+        $('.compensation').on('focus', function(){
+            $(this).removeClass('error');
+        });
 
     });
-
-   
 
 </script>
 
