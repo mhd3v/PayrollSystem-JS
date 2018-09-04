@@ -3,6 +3,11 @@ $page_name = 'Bulk Import Employees';
 include('header.php');
 ?>
 
+</head>
+<body>
+
+<?php include('navbar.php') ?>
+
 <form style="margin:0 20% 0 20%;">
 
     <h2 style="text-align:center; margin-top:10%;">Add new employee</h2>

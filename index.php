@@ -1,8 +1,6 @@
 <?php
 
 $page_name = 'Welcome';
-
-
 include('header.php');
 
 ?>

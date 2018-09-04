@@ -3,6 +3,11 @@ $page_name = 'Generate Payslip';
 include('header.php');
 ?>
 
+</head>
+<body>
+
+<?php include('navbar.php') ?>
+
 <form style="margin:0 20% 0 20%;" id="GeneratePaySlipForm">
 
     <h2 style="text-align:center; margin-top:10%;">Generate Payslip for Employee</h2>

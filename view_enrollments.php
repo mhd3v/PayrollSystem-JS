@@ -165,7 +165,7 @@
 
         table = $('#example').DataTable({
             
-            dom: "Bfrtip",
+            dom: "lBfrtip",
 
             ajax: {
                 "url": "AJAX/get_enrollments.php",
