@@ -66,6 +66,10 @@
         <input type="text" name="selected-records" id="selected-records" hidden>
     </form>
 
+    <script src="assets/jquery-3.3.1.js"></script>
+    <script src="assets/popper.min.js"></script>
+    <script src="assets/bootstrap.min.js"></script>
+
     <?php include('datatables-scripts.php')?>
 
     <script src="assets/bootstrap-datepicker.js" type="text/javascript"></script>
@@ -119,7 +123,7 @@
         function intializeTable(){
 
             table = $('#example').DataTable({
-                dom: 'Bfrtip',
+                dom: 'lBfrtip',
                 ajax: {
                     "url": `AJAX/calculate_pay_all.php`,
                     "type": "POST",
@@ -174,7 +178,6 @@
                     ],
 
                 order: [1, 'asc'],
-                lengthMenu: [[10, 25, 50, -1]],
 
                 buttons: [
                     'selectAll','selectNone', 'excel', 'pdf', 

@@ -1,7 +1,3 @@
-<script src="assets/jquery-3.3.1.js"></script>
-<script src="assets/popper.min.js"></script>
-<script src="assets/bootstrap.min.js"></script>
-
 <script src="assets/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
 
