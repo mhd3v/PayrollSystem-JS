@@ -90,24 +90,41 @@ if(isset($records)){
 
             <?php 
 
-            $count = 0;
+            //$count = 0;
             $deductions = $record['Deductions'];
-            
-            foreach($record['Compensations'] as $compensation_name => $compensation_amt){ ?>
+            $compensations = $record['Compensations'];
 
-            <tr>
-                <td style="width:100pt"><?=$compensation_name?></td>
-                <td style="width:100pt"><?=$compensation_amt?></td>
-                
-                <?php 
-                if(isset(array_values($deductions)[$count])){?> 
-                    <td><?=array_keys($deductions)[$count]?></td>
-                    <td><?=array_values($deductions)[$count]?></td>
-                <?php $count++;}?>
-            </tr>
+            $deductionsAndCompensations = sizeof($deductions) + sizeof($compensations);
 
-            <?php }?>
-    
+            for ($count = 0; $count < $deductionsAndCompensations; $count++){ ?>
+
+                <tr>
+                    <?php 
+                    if(isset(array_values($compensations)[$count])){?> 
+                        <td style="width:100pt"><?=array_keys($compensations)[$count]?></td>
+                        <td style="width:100pt"><?=array_values($compensations)[$count]?></td>
+                    <?php }
+
+                    //else insert empty tds:
+                    else{ ?>  
+                        <td style="width:100pt"></td>
+                        <td style="width:100pt"></td>
+                    <?php }
+
+                    if(isset(array_values($deductions)[$count])){?> 
+                        <td style="width:100pt"><?=array_keys($deductions)[$count]?></td>
+                        <td style="width:100pt"><?=array_values($deductions)[$count]?></td>
+                    <?php }
+
+                    //else insert empty tds:
+                    else{ ?>
+                        <td style="width:100pt"></td>
+                        <td style="width:100pt"></td>
+                    <?php } ?>
+
+                </tr>
+
+            <?php } ?>
 
             <tr class="test">
                 <td style="border-top:3px solid black; border-bottom:3px solid black;width:100pt">Total Earnings</td>

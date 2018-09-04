@@ -170,7 +170,6 @@
             ajax: {
                 "url": "AJAX/get_enrollments.php",
                 "type": "GET",
-                "error": function (e) {},
 
                 "dataSrc": function (d) {
                     return d;

@@ -15,5 +15,5 @@ if(mysqli_num_rows($res) != 0){
 }
 
 else
-    echo null;
+    echo '{"sEcho": 1,"iTotalRecords": "0","iTotalDisplayRecords": "0","aaData": []}';  //this response tells datatables that no records found
 ?>

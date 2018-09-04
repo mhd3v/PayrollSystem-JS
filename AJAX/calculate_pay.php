@@ -52,9 +52,9 @@ function calculate_pay($con, $id, $month_year_string){
                     
                     $leaves_without_pay = $employee_leaves['LeavesWithoutPay'];
 
-                    $leaves_without_pay_deduction = $sal_per_day * $leaves_without_pay;
+                    $leaves_without_pay_deduction = round($sal_per_day * $leaves_without_pay);
 
-                    $total_deductions_amount += $leaves_without_pay_deduction ;
+                    $total_deductions_amount += $leaves_without_pay_deduction;
                     
                     $deductions['LeavesWithoutPay'] = $leaves_without_pay_deduction;
                     
@@ -69,7 +69,7 @@ function calculate_pay($con, $id, $month_year_string){
                 $loan_end_unix = strtotime($employee_loans['EndDate']);
 
                 if(($loan_start_unix <= $current_month_year_unix) && ($loan_end_unix >= $current_month_year_unix)){
-                    $installment = $employee_loans['InstallmentAmount'];
+                    $installment = (int) $employee_loans['InstallmentAmount'];
                     $total_deductions_amount += $installment;
                     $deductions['LoanInstallment'] = $installment;
                 }

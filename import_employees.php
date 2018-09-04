@@ -21,8 +21,6 @@ include('header.php');
     </fieldset>
 
     <div class="alert alert-primary" id="msg" style="display:none"></div>
-    
-    
 
 </form>
 
@@ -65,7 +63,7 @@ include('header.php');
 
             });
 
-            $("#msg").fadeTo(1000, 500).slideUp(500, function(){
+            $("#msg").fadeTo(1500, 500).slideUp(500, function(){
                 $("#msg").slideUp(500);
             });
         });
