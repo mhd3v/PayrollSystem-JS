@@ -13,9 +13,8 @@ $pay_data = json_decode($_POST['paydata'], true);
     <title>Payslip | <?=$pay_data['Employee']['FullName']?></title>
     <style>
     body{
-        font-family: Calibri,Candara,Segoe,Segoe UI,Optima,Arial,sans-serif; 
-        border: 3px solid black;
-        padding:5%;
+        font-family: Segoe UI,Arial,sans-serif; 
+        padding: 0 5% 5% 5%;
     }
     table {
         table-layout: fixed;
@@ -25,10 +24,9 @@ $pay_data = json_decode($_POST['paydata'], true);
     thead{
         text-align:left;
         margin-top:20px;
-        border-top:3px solid black; 
-        border-bottom:3px solid black;
     }
-    .test{
+    
+    .border{
         border-top:3px solid black; 
         border-bottom:3px solid black;
     }
@@ -39,10 +37,39 @@ $pay_data = json_decode($_POST['paydata'], true);
         width:auto;
         height:auto;
     }
+
+    ul li {
+        display: inline;
+    }
+
+    @media print{
+        .options{
+            display:none;
+        }
+        body{
+            padding-top: 5%;
+        }
+    }
+
     </style>
     
 </head>
 <body>
+    
+    <div style="float:right;" class="options">
+        <ul>
+            <li><button onclick="window.print()">Print</button></li>
+            <li><button id="generate-pdf">Save as PDF</button></li>
+        </ul>
+    </div>
+
+    <form action="payslips_pdf.php" method="POST" target="_blank">
+        <input type="text" name="selected-records" id="selected-records" hidden>
+        <input type="text" name="DownloadPdf" hidden>
+    </form>
+
+    <div style="clear:both"></div>
+    
     <img src="assets/jazz-logo.jpg" style="position:absolute; z-index:-1;"/>
     <h2 style="text-align:center;">Jazz</h2>
     <h5 style="text-align:center;">7 Park Rd, F-8 Markaz, Islamabad, Islamabad Capital Territory</h5>
@@ -129,7 +156,7 @@ $pay_data = json_decode($_POST['paydata'], true);
 
     <table style="width:100%">
         
-            <tr class="test">
+            <tr class="border">
                 <td>Total Earnings</td>
                 <td><?=$pay_data['TotalCompensationsAmount']?></td>
                 <td>TotalDeductions</td>
@@ -144,7 +171,27 @@ $pay_data = json_decode($_POST['paydata'], true);
         
     </table>
 
+    <script src="assets/jquery-3.3.1.js"></script>
+    <script>
+
+        $('document').ready(function(){
+
+            $('#generate-pdf').on('click', function(e){
+                e.preventDefault();
+
+                var payData = [<?php echo json_encode($pay_data)?>];
+
+                $("#selected-records").val(JSON.stringify(payData));
+
+                $('form').submit();
+
+            });
+
+        });
+
+    </script>
 </body>
+
 </html>
 
 <?php } 

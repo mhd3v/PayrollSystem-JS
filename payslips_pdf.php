@@ -1,8 +1,16 @@
 <?php
 
-$records = $_POST['selected-records'];
+if(isset($_POST['selected-records'])){
 
-if(isset($records)){
+    $records = $_POST['selected-records'];
+    
+    if(isset($_POST['DownloadPdf']))    //auto download
+        generatePdfPaySlip($records, true);
+    else
+        generatePdfPaySlip($records, false);
+}
+
+function generatePdfPaySlip($records, $download) {
 
     require_once __DIR__ . '/vendor/autoload.php';
     $mpdf = new \Mpdf\Mpdf();
@@ -11,7 +19,7 @@ if(isset($records)){
     $num_record = sizeof($records);
     $main_counter = 1;
         
-    ob_start();?>
+    ob_start(); ?>
 
     <!DOCTYPE html>
     <html lang="en">
@@ -50,7 +58,7 @@ if(isset($records)){
         
         <div style="width:1000px;">
 
-        <table style="width:100%;overflow: wrap"  width="100%" autosize="1">
+        <table style="width:100%;overflow:wrap"  width="100%" autosize="1">
 
             <tr>
                 <td style="width:100pt">Employee Code</td>
@@ -157,16 +165,15 @@ if(isset($records)){
 $HTMLoutput = ob_get_contents();
 ob_end_clean();
 
-
 $mpdf->WriteHTML($HTMLoutput);
 
+if($download)
+$mpdf->Output('Payslip.pdf', 'D');
+
+else
 $mpdf->Output();
 
 }
 
-
-
-else{
-
-}?>
+?>
 
