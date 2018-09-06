@@ -44,43 +44,11 @@ include('datatables-styles.php');
 
             <legend class="w-auto">Selected Employee Loans</legend>
 
-            <!-- <div class="row form-group">
-                
-                <div class="col-md-3">
-                    <label for="">Total Amount:</label>
-                    <input class="form-control" type="text" name="total_amt" id="total_amt" required/>
-                </div>
-
-                <div class="col-md-3">
-                    <label for="">Total Installments:</label>
-                    <input class="form-control" type="text" name="total_installments" id="total_installments" required/>
-                </div>
-
-                <div class="col-md-6">
-                    <label for="">Installment Amount (Per month):</label>
-                    <input class="form-control" type="text" id="installment_amt" readonly/>
-                </div>
-                
-            </div>
-
-            <div class="row form-group">
-
-                <div class="col-sm-6">
-                    <label for="">Loan Start Date:</label>
-                    <input class="form-control" type="date" name="start_date" id="start_date" required/>
-                </div>
-
-                <div class="col-sm-6"> 
-                    <label for="">Loan End Date:</label>
-                    <input class="form-control" type="date" name="end_date" id="end_date" required/>
-                </div>
-
-            </div> -->
-
             <div id="table-wrapper" class="table-responsive" style="display:none">
                 <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
                     <thead>
                         <tr>
+                            <th></th>
                             <th>Loan Id</th>
                             <th>Total Amount</th>
                             <th>Total Installments</th>
@@ -114,16 +82,22 @@ include('datatables-styles.php');
 
         editor = new $.fn.dataTable.Editor({
 
-            idSrc:  'Id',
+            idSrc: 'Id',
 
             table: "#example",
 
             fields: [{
                 label: "Total Amount:",
-                name: "TotalAmount"
+                name: "TotalAmount",
+                attr: {
+                    type: "number"
+                }
             }, {
                 label: "Total Installments:",
-                name: "TotalInstallments"
+                name: "TotalInstallments",
+                attr: {
+                    type: "number"
+                }
             }, {
                 label: "Start Date:",
                 name: "StartDate",
@@ -132,7 +106,7 @@ include('datatables-styles.php');
             },{
                 label: "End Date:",
                 name: "EndDate",
-                type:  'datetime'
+                type:  'datetime',
             }],
 
             formOptions: {
@@ -148,7 +122,37 @@ include('datatables-styles.php');
                 var output = { data: [] };
 
                 if (d.action === 'create') {
-                    console.log('Create ajax call');
+
+                    $.ajax({
+                        type: 'POST',
+                        url: 'AJAX/add_loan.php',
+                        data: { 
+                            'employee_id': selectedEmployeeId, 
+                            'total_amt': d.data[0].TotalAmount,
+                            'total_installments': d.data[0].TotalInstallments,
+                            'start_date': d.data[0].StartDate,
+                            'end_date': d.data[0].EndDate,
+                        },
+
+                        success: function (returnData) {
+
+                            returnData = JSON.parse(returnData);
+
+                            if (!returnData.error) {
+                                console.log(returnData);
+                                output.data.push(returnData);
+                                successCallback(output);
+                            }
+                            else {
+                                successCallback(returnData);
+                            }
+
+                        },
+                        error: function (xhr, error, thrown) {
+                            errorCallback( xhr, error, thrown );
+                        }
+                    }); 
+
                 }
 
                 if (d.action === 'replace') {
@@ -157,16 +161,16 @@ include('datatables-styles.php');
 
                 if (d.action === 'remove') {
 
-                    var employeeRowsToDelete = [];
+                    var selectedLoanRecords = [];
 
                     for(var i = 0; i < Object.keys(d.data).length; i++){
-                        employeeRowsToDelete.push(Object.keys(d.data)[i]);
+                        selectedLoanRecords.push(Object.keys(d.data)[i]);
                     };
                     
                     $.ajax({
                         type: 'POST',
-                        url: 'AJAX/delete_employees.php',
-                        data: {'recordsToDelete' : employeeRowsToDelete},
+                        url: 'AJAX/delete_loans.php',
+                        data: {'loansToDelete' : selectedLoanRecords},
 
                         success: function (data) {
 
@@ -187,27 +191,31 @@ include('datatables-styles.php');
 
                 if(d.action == 'edit'){
 
-                    var eId = Object.keys(d.data)[0];
-                    var propertyToChange = Object.keys(d.data[eId])[0];
-                    var newVal = d.data[eId][propertyToChange];
+                    var loanId = Object.keys(d.data)[0];
+                    var propertyToChange = Object.keys(d.data[loanId])[0];
+                    var newVal = d.data[loanId][propertyToChange];
                     
                     $.ajax({
                         type: 'POST',
-                        url: 'AJAX/edit_employee_record.php',
+                        url: 'AJAX/edit_loan_record.php',
                         data: { 
-                            'Id': eId, 
+                            'Id': loanId, 
+                            'employeeId': selectedEmployeeId,
                             'propertyToChange': propertyToChange,
-                            'newVal': d.data[eId][propertyToChange]
+                            'newVal': newVal
                         },
 
                         success: function (returnData) {
 
-                            if (returnData) {
-                                output.data.push(JSON.parse(returnData));
+                            returnData = JSON.parse(returnData);
+
+                            if (!returnData.error) {
+                                console.log(returnData);
+                                output.data.push(returnData);
                                 successCallback(output);
                             }
                             else {
-                               
+                                successCallback(returnData);
                             }
 
                         },
@@ -254,8 +262,12 @@ include('datatables-styles.php');
 
                 if(!dateError){
                     var startDateUnix = (parseInt((new Date(start_date.val()).getTime() / 1000).toFixed(0)));
-                    var startDateUnix = (parseInt((new Date(start_date.val()).getTime() / 1000).toFixed(0)));
-                    end_date.error('e1');
+                    var endDateUnix = (parseInt((new Date(end_date.val()).getTime() / 1000).toFixed(0)));
+                    
+                    if(startDateUnix > endDateUnix){
+                        start_date.error('Start date needs to be before the ending date');
+                    }
+
                 }
 
                 if (this.inError()) {
@@ -278,38 +290,6 @@ include('datatables-styles.php');
                 $('.selected-employee-area').fadeIn("slow");
                 $("#msg").fadeOut("slow");
 
-                // $.ajax({
-                //     type: 'get',
-                //     url: `AJAX/get_loan.php?employee_id=${selectedEmployeeId}`,
-
-                //     success: function (data) {
-
-                //         if (data) { //loan data found
-
-                //             var loanData = JSON.parse(data);
-                //             console.log(loanData);
-                            
-                //             $('#total_amt').val(loanData.TotalAmount);
-                //             $('#total_installments').val(loanData.TotalInstallments);
-                //             $('#installment_amt').val(loanData.InstallmentAmount);
-                //             $('#start_date').val(loanData.StartDate);
-                //             $('#end_date').val(loanData.EndDate);
-
-                //         }
-                //         else {  //loan record doesn't exist
-                //             $('.submit-btn').val('Add Record');
-                //             $('.loan-area input').val('');
-                //         }
-
-                //         $('.loan-area').fadeIn("slow");
-                //         $('.submit-btn').fadeIn("slow");
-                //         $('#total_amt').focus();
-                //     },
-                //     error: function (data) {
-                //         $("#msg").html("failed to connect to server");
-                //     }
-                // }); 
-
                 if($.fn.DataTable.isDataTable('#example')) 
                     table.destroy();
 
@@ -325,39 +305,7 @@ include('datatables-styles.php');
                 .append('Name: ' + item.FullName + ', CNIC: ' + item.CNIC + ', Employee Code: ' + item.Code)
                 .appendTo(ul);
         };
-
-        //====================================== Autocomplete End ====================================================
-
-        // $('form').on('submit', function(e) {
-        //     e.preventDefault();
-
-        //     $.ajax({
-        //         type: 'post',
-        //         url: 'AJAX/add_loan.php',
-        //         data: $('form').serialize() + `&employee_id=${selectedEmployeeId}`,
-
-        //         success: function (data) {
-
-        //             if (data == 1) {
-        //                 $("#msg").html('Successfully inserted loan data');
-        //                 $("#msg").fadeTo(1000, 500).slideUp(500, function(){
-        //                     $("#msg").slideUp(500);
-        //                 });
-        //                 $('.selected-employee-area').fadeOut("slow");
-        //                 $('.loan-area').fadeOut("slow");
-        //                 $('.submit-btn').fadeOut("slow");
-        //             }
-        //             else {  //error while inserting in db
-        //                 $("#msg").html(data);
-        //                 $("#msg").fadeIn("slow");
-        //             }
-                    
-        //         },
-        //         error: function (data) {
-        //             $("#msg").html("failed to connect to server");
-        //         }
-        //     }); 
-        // });
+       
 
         function intializeTable(){
 
@@ -377,9 +325,13 @@ include('datatables-styles.php');
                     }
                 },
 
-                responsive:true,
-
                 columns: [
+                    {
+                        data: null,
+                        defaultContent: '',
+                        className: 'select-checkbox',
+                        orderable: false
+                    },
                     { 
                         data: "Id",
                     },
@@ -404,7 +356,7 @@ include('datatables-styles.php');
                     }
                 ],
 
-                order: [0, 'asc'],
+                order: [1, 'asc'],
 
                 buttons: [
                     { extend: "create", editor: editor },
@@ -415,6 +367,11 @@ include('datatables-styles.php');
                     editor: editor,
                     columns: '.editable',
                     editOnFocus: true
+                },
+
+                select: {
+                    style: 'os',
+                    selector: 'td:first-child'
                 }
             });
 
@@ -424,21 +381,7 @@ include('datatables-styles.php');
 
         }
 
-        $('#DTE_Field_TotalAmount').keyup(function(){
-            console.log('workds');
-            if($('#DTE_Field_TotalAmount').val() != '' && $('#DTE_Field_TotalInstallments').val() != '')
-                $('#DTE_Field_InstallmentAmount').val(($('#DTE_Field_TotalAmount').val() / $('#DTE_Field_TotalInstallments').val()).toFixed(2));
-        });
-
-        $('#DTE_Field_TotalInstallments').keyup(function(){
-            if($('#DTE_Field_TotalAmount').val() != '' && $('#DTE_Field_TotalInstallments').val() != '')
-                $('#DTE_Field_InstallmentAmount').val(($('#DTE_Field_TotalAmount').val() / $('#DTE_Field_TotalInstallments').val()).toFixed(2));
-        });
-
-
     });
-
-   
 
 </script>
 

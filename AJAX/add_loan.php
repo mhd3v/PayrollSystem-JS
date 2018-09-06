@@ -10,42 +10,32 @@ $installment_amt = $total_amt/$total_installments;
 $start_date = $_POST['start_date'];
 $end_date = $_POST['end_date'];
 
-$query = "select * from `employee_loans` where `EmployeeId` = ${employee_id}";
+$query = "select * from `employees` where `Id` = ${employee_id}";
 
 $res = mysqli_query($con, $query);
 
-if(mysqli_num_rows($res) == 0) {    //no record for employee compensation
+if($res && (mysqli_num_rows($res) == 1)) { 
 
-    $query = "INSERT INTO `employee_loans` 
-    (`EmployeeId`,`TotalAmount`,`TotalInstallments`, `InstallmentAmount`,`StartDate`, `EndDate`) 
-    VALUES (${employee_id},${total_amt},${total_installments},${installment_amt},'${start_date}','${end_date}')";
+    if(mysqli_num_rows(mysqli_query($con, "Select * from employee_loans where EmployeeId = ${employee_id} AND 
+    StartDate = '${start_date}' AND EndDate= '${end_date}'")) == 0){
 
-    $res = mysqli_query($con, $query);
+        $query = "INSERT INTO `employee_loans` 
+        (`EmployeeId`,`TotalAmount`,`TotalInstallments`, `InstallmentAmount`,`StartDate`, `EndDate`) VALUES 
+        (${employee_id},${total_amt},${total_installments},${installment_amt},'${start_date}','${end_date}')";
 
-    if($res)
-    echo 1;
-    else
-    echo $query;
+        $res = mysqli_query($con, $query);
 
-}
+        if($res){
+        echo json_encode(mysqli_fetch_assoc(mysqli_query($con, 'Select * from employee_loans ORDER BY Id DESC LIMIT 1;')));
+        }
 
-else {
+    }
 
-    $query = "Update `employee_loans` 
-    SET 
-    `TotalAmount` = ${total_amt}, `TotalInstallments` = ${total_installments},  
-    `InstallmentAmount` = ${installment_amt},`StartDate` = '${start_date}',
-    `EndDate` = '${end_date}'
-    WHERE 
-    `EmployeeId` = ${employee_id}";
-
-    $res = mysqli_query($con, $query);
-
-    if($res)
-    echo 1;
-    else
-    echo $query;
+    else {
+        $errorField = array('error'=> 'Same data between the set range exists for the user');
+        //'fieldErrors' => array(array('name' => 'StartDate', 'status' => 'Samedate set'), array('name' => 'EndDate', 'status' => 'Samedate set'))
+        echo json_encode($errorField);
+    }
 
 }
-
 ?>
