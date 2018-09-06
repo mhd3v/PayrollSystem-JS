@@ -9,6 +9,7 @@ $total_installments = $_POST['total_installments'];
 $installment_amt = $total_amt/$total_installments;
 $start_date = $_POST['start_date'];
 $end_date = $_POST['end_date'];
+$description = $_POST['description'];
 
 $query = "select * from `employees` where `Id` = ${employee_id}";
 
@@ -20,8 +21,8 @@ if($res && (mysqli_num_rows($res) == 1)) {
     StartDate = '${start_date}' AND EndDate= '${end_date}'")) == 0){
 
         $query = "INSERT INTO `employee_loans` 
-        (`EmployeeId`,`TotalAmount`,`TotalInstallments`, `InstallmentAmount`,`StartDate`, `EndDate`) VALUES 
-        (${employee_id},${total_amt},${total_installments},${installment_amt},'${start_date}','${end_date}')";
+        (`EmployeeId`,`TotalAmount`,`TotalInstallments`, `InstallmentAmount`,`StartDate`, `EndDate`, `Description`) VALUES 
+        (${employee_id},${total_amt},${total_installments},${installment_amt},'${start_date}','${end_date}', '${description}')";
 
         $res = mysqli_query($con, $query);
 
@@ -38,4 +39,7 @@ if($res && (mysqli_num_rows($res) == 1)) {
     }
 
 }
+
+else
+echo 'No employee found';
 ?>

@@ -32,7 +32,7 @@
 
         <div class="row form-group justify-content-center">
             <div class="input-group col-10 col-sm-4">
-                <input style="height:35px;" type="text" id="month_year" class="form-control" name="month_year" autocomplete="disabled" required>
+                <input style="height:35px;" type="text" id="month_year" class="form-control" name="month_year" autocomplete="off" required>
                 <label style="height:35px;" class="input-group-addon btn calendar-icon" for="month_year">
                     <span class="fa fa-calendar open-datetimepicker"></span>
                 </label>

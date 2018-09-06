@@ -37,7 +37,7 @@ function calculate_pay($con, $id, $month_year_string){
 
             $employee_leaves = mysqli_fetch_assoc(mysqli_query($con, "Select * from employee_leaves where EmployeeId = {$id}"));
         
-            $employee_loans = mysqli_fetch_assoc(mysqli_query($con, "Select * from employee_loans where EmployeeId = {$id}"));
+            $employee_loans = mysqli_query($con, "Select * from employee_loans where EmployeeId = {$id}");
 
 
             if($employee_leaves){  //check if leave record exists
@@ -62,16 +62,26 @@ function calculate_pay($con, $id, $month_year_string){
 
             }
 
-            if($employee_loans){    //check if loan record exists
+            if($employee_loans && mysqli_num_rows($employee_loans) != 0){    //check if loan record exists
 
-                $current_month_year_unix = strtotime("$year-$month-1");
-                $loan_start_unix =  strtotime($employee_loans['StartDate']);
-                $loan_end_unix = strtotime($employee_loans['EndDate']);
+                $installmentNo = 1;
 
-                if(($loan_start_unix <= $current_month_year_unix) && ($loan_end_unix >= $current_month_year_unix)){
-                    $installment = (int) $employee_loans['InstallmentAmount'];
-                    $total_deductions_amount += $installment;
-                    $deductions['LoanInstallment'] = $installment;
+                while($employee_loan = mysqli_fetch_assoc($employee_loans)){
+
+                    $current_month_year_unix = strtotime("$year-$month-1");
+                    $loan_start_unix =  strtotime($employee_loan['StartDate']);
+                    $loan_end_unix = strtotime($employee_loan['EndDate']);
+
+                    if(($loan_start_unix <= $current_month_year_unix) && ($loan_end_unix >= $current_month_year_unix)){
+                        $installment = (int) $employee_loan['InstallmentAmount'];
+                        $total_deductions_amount += $installment;
+                        if(isset($employee_loan['Description']))
+                            $deductions['LoanInstallment '.$installmentNo. ' - '.$employee_loan['Description']] = $installment;
+                        else
+                            $deductions['LoanInstallment '.$installmentNo] = $installment;
+                        $installmentNo++;
+                    }
+
                 }
 
             }

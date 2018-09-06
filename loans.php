@@ -55,6 +55,7 @@ include('datatables-styles.php');
                             <th>Installment Amount</th>
                             <th>Start Date</th>
                             <th>End Date</th>
+                            <th>Description</th>
                         </tr>
                     </thead>
                 </table>
@@ -107,6 +108,9 @@ include('datatables-styles.php');
                 label: "End Date:",
                 name: "EndDate",
                 type:  'datetime',
+            },{
+                label: "Description:",
+                name: "Description",
             }],
 
             formOptions: {
@@ -132,6 +136,7 @@ include('datatables-styles.php');
                             'total_installments': d.data[0].TotalInstallments,
                             'start_date': d.data[0].StartDate,
                             'end_date': d.data[0].EndDate,
+                            'description': d.data[0].Description,
                         },
 
                         success: function (returnData) {
@@ -310,7 +315,7 @@ include('datatables-styles.php');
         function intializeTable(){
 
             table = $('#example').DataTable({
-                dom: 'Bfrtip',
+                dom: 'lBfrtip',
                 ajax: {
                     "url": "AJAX/get_loan.php",
                     "type": "POST",
@@ -352,6 +357,10 @@ include('datatables-styles.php');
                     },
                     { 
                         data: "EndDate",
+                        class: "editable"
+                    },
+                    { 
+                        data: "Description",
                         class: "editable"
                     }
                 ],

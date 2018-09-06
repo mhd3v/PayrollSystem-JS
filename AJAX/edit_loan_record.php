@@ -47,7 +47,7 @@ if($propertyToChange == 'StartDate' || $propertyToChange == 'EndDate'){
     }
 }
     
-else if(!$error){
+if(!$error){
 
     $query = "Select * from employee_loans WHERE Id = {$Id}";
     $res = mysqli_query($con, $query);
