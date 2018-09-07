@@ -5,7 +5,7 @@ session_start();
 
 <nav class="navbar navbar-expand-md navbar-dark bg-dark">
 
-  <a class="navbar-brand abs" href="index.php">Payroll System</a>
+  <a class="navbar-brand abs" href="index.php">PRMS</a>
   
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsingNavbar">
       <span class="navbar-toggler-icon"></span>
@@ -19,10 +19,10 @@ session_start();
 
         <li class="nav-item dropdown">
           <a style="color:white;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
-            <i class="fas fa-user-circle mr-1" style="font-size:1.2em"></i><?=$_SESSION['user']?>
+            <i class="fas fa-user-circle mr-2" style="font-size:1.2em"></i><?=$_SESSION['user']?>
           </a>
           <div class="dropdown-menu">
-            <a class="dropdown-item" href="logout.php">Logout</a>
+            <a class="dropdown-item" data-toggle="modal" data-target="#logout-modal">Logout</a>
           </div>
         </li>
 
@@ -75,3 +75,21 @@ session_start();
   </div>
 
 </nav>
+
+<div id="logout-modal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-dialog-centered">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Are you sure you want to logout of PRMS?</h4>
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+      </div>
+      <div class="modal-footer">
+        <a class="btn btn-danger" href="logout.php">Yes</a>
+        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+      </div>
+    </div>
+
+  </div>
+</div>

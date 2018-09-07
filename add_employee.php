@@ -11,7 +11,15 @@ include('navbar.php');
 
 if(session_status() == PHP_SESSION_NONE) 
 session_start();
-if(isset($_SESSION['user'])){ ?>
+if(isset($_SESSION['user'])){ 
+    
+include('connection.php');
+$res = mysqli_query($con, "Select Max(Id) from employees");
+$LatestId = 1;
+if($res && mysqli_num_rows($res) == 1){
+    $LatestId = mysqli_fetch_assoc($res)['Max(Id)'];
+}
+?>
 
 <form style="margin:0 20% 0 20%;">
 
@@ -25,17 +33,22 @@ if(isset($_SESSION['user'])){ ?>
 
             <div class="col-sm-4">
                 <label for="">Code:</label>
-                <input class="form-control" type="text" name="code" autofocus>
+                <input class="form-control" type="text" name="code" value="<?='EMP - '.$LatestId?>">
             </div>
 
             <div class="col-sm-4">
                 <label for="">Department:</label>
-                <input class="form-control" type="text" name="dep">
+                <select name="dep" class="form-control" required>
+                    <option selected>Technology</option>
+                    <option value="">HR</option>
+                    <option value="">Engineering</option>
+                    <option value="">R & D</option>
+                </select>
             </div>
 
             <div class="col-sm-4">
                 <label for="">Designation:</label>
-                <input class="form-control" type="text" name="designation">
+                <input class="form-control" type="text" name="designation" autofocus>
             </div>
 
         </div>
@@ -50,12 +63,12 @@ if(isset($_SESSION['user'])){ ?>
         
             <div class="col-sm-7">
                 <label for="">Full Name:</label>
-                <input class="form-control" type="text" name="full_name">
+                <input class="form-control" type="text" name="full_name" required>
             </div>
 
             <div class="col-sm-5 text-nowrap">
                 <label for="">CNIC:</label>
-                <input class="form-control" type="number" name="cnic">
+                <input class="form-control" type="number" name="cnic" required>
             </div>
 
         </div>

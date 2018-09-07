@@ -34,7 +34,7 @@ if(!isset($_SESSION['user'])){
                 <div class="w-100"></div>
 
                 <div class="text-center">
-                    <input type="submit" value="Login" class="btn btn-success">
+                    <input type="submit" value="Login" class="btn btn-primary">
                 </div>
 
                 <div class="w-100"></div>
