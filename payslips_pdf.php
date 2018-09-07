@@ -10,6 +10,10 @@ if(isset($_POST['selected-records'])){
         generatePdfPaySlip($records, false);
 }
 
+else{
+    echo 'No data';
+}
+
 function generatePdfPaySlip($records, $download) {
 
     require_once __DIR__ . '/vendor/autoload.php';

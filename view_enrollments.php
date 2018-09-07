@@ -6,12 +6,34 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Enrollments | Payroll System</title>
     <?php include('datatables-styles.php') ?>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
 
+    <script src="assets/jquery-3.3.1.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="assets/jquery-ui.min.js"></script>
+
+    <style>
+        @media (min-width: 768px) {
+        .navbar-brand.abs
+            {
+                position: absolute;
+                width: 100%;
+                left: 0;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <?php include('navbar.php') ?>
+    <?php   
+    include('navbar.php');
+
+    if(session_status() == PHP_SESSION_NONE) 
+    session_start();
+    if(isset($_SESSION['user'])){ ?>
 
     <div id="table-wrapper" class="table-responsive mt-3">
         <table id="example" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -31,10 +53,6 @@
             </thead>
         </table>
     </div>
-    
-    <script src="assets/jquery-3.3.1.js"></script>
-    <script src="assets/popper.min.js"></script>
-    <script src="assets/bootstrap.min.js"></script>
 
     <?php include('datatables-scripts.php'); ?>
 
@@ -260,7 +278,9 @@
 
     </script>
 
+<?php } else {
+    include('error.php');
+}?>
 </body>
-
 </html>
                 

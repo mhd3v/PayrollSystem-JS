@@ -21,6 +21,17 @@
     <script src="assets/bootstrap-datepicker.js" type="text/javascript"></script>
 
     <style>
+
+    @media (min-width: 768px) {
+    .navbar-brand.abs
+        {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            text-align: center;
+        }
+    }
+
     
     .ui-autocomplete li:hover{
         background-color:#F1F1F1;

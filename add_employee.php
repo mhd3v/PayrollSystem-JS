@@ -2,11 +2,16 @@
 $page_name = 'Add Employee';
 include('header.php');
 ?>
-
 </head>
 <body>
 
-<?php include('navbar.php') ?>
+<?php 
+
+include('navbar.php');
+
+if(session_status() == PHP_SESSION_NONE) 
+session_start();
+if(isset($_SESSION['user'])){ ?>
 
 <form style="margin:0 20% 0 20%;">
 
@@ -121,6 +126,10 @@ include('header.php');
 
     });
 </script>
+
+<?php } else {
+    include('error.php');
+}?>
 
 </body>
 </html>
