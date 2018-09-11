@@ -1,5 +1,5 @@
 <?php
-$page_name = 'Bulk Import Employees';
+$page_name = 'Import Employees';
 include('header.php');
 ?>
 

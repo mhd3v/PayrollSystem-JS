@@ -127,24 +127,16 @@ if($res && mysqli_num_rows($res) == 1){
                 $("#name-error").show();
                 error = true;
             }
-            else
-                $("#name-error").hide(); 
 
             if(!cnicRegex.test($('input[name=cnic]').val())){
-                console.log($('input[name=cnic]').val().length);
                 $("#cnic-error").show();
                 error = true;
             }
-            else
-                $("#cnic-error").hide();
 
             if(!phoneRegex.test($('input[name=mob_number]').val())){
-                console.log($('input[name=mob_number]').val().length);
                 $("#phone-error").show();
                 error = true;
             }
-            else 
-                $("#phone-error").hide();
 
             if(error)
                 return;
