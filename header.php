@@ -32,9 +32,23 @@
         }
     }
 
-    
+    @media (max-width: 576px) {
+        .ui-autocomplete{
+            width:100px;
+        }
+    }
+  
     .ui-autocomplete li:hover{
         background-color:#F1F1F1;
+    }
+
+    .ui-autocomplete li{
+        padding:5px;
+        border-bottom: 1px solid #dbdde0;
+    }
+
+    .ui-autocomplete{
+        width:200px;
     }
 
     .calendar-icon{
