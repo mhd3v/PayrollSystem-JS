@@ -28,13 +28,21 @@ if(isset($_SESSION['user'])){ ?>
         
             <legend class="w-auto">Selected Employee Details</legend>
         
-            <div class="form-group">
-                <label for="">First Name:</label>
-                <input class="form-control" type="text" id="first_name" disabled/>
-                <label for="">Employee Code:</label>
-                <input class="form-control" type="text" id="emp_code" disabled/>
-                <label for="">CNIC:</label>
-                <input class="form-control" type="text" id="emp_cnic" disabled/>
+            <div class="row form-group">
+                <div class="col-sm-4">
+                    <label for="">First Name:</label>
+                    <input class="form-control" type="text" id="first_name" disabled/>
+                </div>
+
+                <div class="col-sm-4">
+                    <label for="">Code:</label>
+                    <input class="form-control" type="text" id="emp_code" disabled/>
+                </div>
+                
+                <div class="col-sm-4">
+                    <label for="">CNIC:</label>
+                    <input class="form-control" type="text" id="emp_cnic" disabled/>
+                </div>    
             </div>
         
         </fieldset>

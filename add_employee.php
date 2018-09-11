@@ -80,7 +80,7 @@ if($res && mysqli_num_rows($res) == 1){
             <div class="col-sm-7">
                 <label for="">Mobile Number:</label>
                 <input class="form-control" type="text" name="mob_number" maxlength="12" required>
-                <small id="phone-error" style="display:none" class="form-text text-danger">Length should be 11 digits!</small>
+                <small id="phone-error" style="display:none" class="form-text text-danger">Length should be 12 digits!</small>
             </div>
 
             <div class="col-sm-5">
@@ -109,12 +109,11 @@ if($res && mysqli_num_rows($res) == 1){
 </form>
 
 <script>
+
     $('document').ready(function(){
 
-        var error = false;
-
-        var cnicRegex = new RegExp('[0-9]{13}'); 
-        var phoneRegex = new RegExp('[0-9]{11}');
+        var cnicRegex = new RegExp('^[0-9]{13}$'); 
+        var phoneRegex = new RegExp('^[0-9]{12}$');
         var nameRegex = new RegExp('^[a-zA-Z ]{1,}$');
         var numRegex = new RegExp('^[0-9]{1,}$');
 
@@ -122,19 +121,30 @@ if($res && mysqli_num_rows($res) == 1){
             
             e.preventDefault();
 
-            if(!cnicRegex.test($('input[name=cnic]'))){
+            var error = false;
+
+            if(!nameRegex.test($('input[name=full_name]').val())){
+                $("#name-error").show();
+                error = true;
+            }
+            else
+                $("#name-error").hide(); 
+
+            if(!cnicRegex.test($('input[name=cnic]').val())){
+                console.log($('input[name=cnic]').val().length);
                 $("#cnic-error").show();
                 error = true;
             }
             else
                 $("#cnic-error").hide();
 
-            if(!phoneRegex.test($('input[name=mob_number]'))){
+            if(!phoneRegex.test($('input[name=mob_number]').val())){
+                console.log($('input[name=mob_number]').val().length);
                 $("#phone-error").show();
                 error = true;
             }
             else 
-                $("#phone-error").show();
+                $("#phone-error").hide();
 
             if(error)
                 return;
@@ -147,10 +157,9 @@ if($res && mysqli_num_rows($res) == 1){
                 success: function (data) {
                     
                     if (data == 1){
-                        $("#msg").html('Successfully added employee to database');
-                        $('form').trigger("reset");
+                        $("#msg").html('Successfully added employee to database, refreshing page...');
                         $("#msg").fadeTo(1000, 500).slideUp(500, function(){
-                            $("#msg").slideUp(500);
+                            location.reload();
                         });
                     }
                     else {
