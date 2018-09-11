@@ -83,7 +83,13 @@
                 name: "Designation"
             },{
                 label: "Department:",
-                name: "Department"
+                name: "Department",
+                type:  "select",
+                options: [
+                    { label: "Technology"},
+                    { label: "HR"},
+                    { label: "Engineering"},
+                    { label: "R & D"}]
             }, {
                 label: "CNIC:",
                 name: "CNIC"

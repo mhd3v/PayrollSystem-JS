@@ -18,7 +18,7 @@ session_start();
         <?php if(isset($_SESSION['user'])) {?>
 
         <li class="nav-item dropdown">
-          <a style="color:white;" class="nav-link dropdown-toggle" role="button" data-toggle="dropdown">
+          <a style="color:white;" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
             <i class="fas fa-user-circle mr-2" style="font-size:1.2em"></i><?=$_SESSION['user']?>
           </a>
           <div class="dropdown-menu">

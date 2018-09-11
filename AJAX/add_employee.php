@@ -21,6 +21,6 @@ $res = mysqli_query($con, $query);
 if($res)
 echo 1;
 else
-echo $query;
+echo 'Failed to insert data in database';
 
 ?>

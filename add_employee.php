@@ -63,12 +63,14 @@ if($res && mysqli_num_rows($res) == 1){
         
             <div class="col-sm-7">
                 <label for="">Full Name:</label>
-                <input class="form-control" type="text" name="full_name" required>
+                <input class="form-control" type="text" name="full_name" id="full-name" required>
+                <small id="name-error" style="display:none" class="form-text text-danger">Name can only contain alphabets!</small>
             </div>
 
             <div class="col-sm-5 text-nowrap">
                 <label for="">CNIC:</label>
-                <input class="form-control" type="number" name="cnic" required>
+                <input class="form-control" type="text" name="cnic" maxlength="13" required>
+                <small id="cnic-error" style="display:none" class="form-text text-danger">Length should be 13 digits!</small>
             </div>
 
         </div>
@@ -77,7 +79,8 @@ if($res && mysqli_num_rows($res) == 1){
 
             <div class="col-sm-7">
                 <label for="">Mobile Number:</label>
-                <input class="form-control" type="number" name="mob_number">
+                <input class="form-control" type="text" name="mob_number" maxlength="12" required>
+                <small id="phone-error" style="display:none" class="form-text text-danger">Length should be 11 digits!</small>
             </div>
 
             <div class="col-sm-5">
@@ -93,8 +96,8 @@ if($res && mysqli_num_rows($res) == 1){
         </div>
 
         <div class="form-group">
-            <label for="">Bank Account Number:</label>
-            <input class="form-control" type="text" name="bank_acc">
+            <label for="">Bank Account Number (IBAN):</label>
+            <input class="form-control" type="text" maxlength="14" name="bank_acc">
         </div>
 
     </fieldset>
@@ -108,9 +111,34 @@ if($res && mysqli_num_rows($res) == 1){
 <script>
     $('document').ready(function(){
 
+        var error = false;
+
+        var cnicRegex = new RegExp('[0-9]{13}'); 
+        var phoneRegex = new RegExp('[0-9]{11}');
+        var nameRegex = new RegExp('^[a-zA-Z ]{1,}$');
+        var numRegex = new RegExp('^[0-9]{1,}$');
+
         $('form').on('submit', function(e) {
+            
             e.preventDefault();
 
+            if(!cnicRegex.test($('input[name=cnic]'))){
+                $("#cnic-error").show();
+                error = true;
+            }
+            else
+                $("#cnic-error").hide();
+
+            if(!phoneRegex.test($('input[name=mob_number]'))){
+                $("#phone-error").show();
+                error = true;
+            }
+            else 
+                $("#phone-error").show();
+
+            if(error)
+                return;
+                
             $.ajax({
                 type: 'post',
                 url: 'AJAX/add_employee.php',
@@ -136,7 +164,34 @@ if($res && mysqli_num_rows($res) == 1){
             }); 
 
         });
+        
+        $('#full-name').on('keyup',function(){
+            if($(this).val().length >= 5){
+                if(!nameRegex.test($(this).val()))
+                    $("#name-error").show();
+                else
+                    $("#name-error").hide(); 
+            }   
+        });
 
+        $('input[name=cnic]').on('keyup',function(){
+            if($(this).val().length >= 1){
+                if(!numRegex.test($(this).val()))
+                    $("#cnic-error").show();
+                else
+                    $("#cnic-error").hide();
+            }
+        });
+
+        $('input[name=mob_number]').on('keyup',function(){
+            if($(this).val().length >= 1){
+                if(!numRegex.test($(this).val()))
+                    $("#phone-error").show();
+                else
+                    $("#phone-error").hide(); 
+            }
+        });
+        
     });
 </script>
 
